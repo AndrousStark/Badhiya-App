@@ -1,0 +1,111 @@
+{
+  "common": {
+    "namaste": "नमस्ते",
+    "badhiya": "बढ़िया",
+    "loading": "रुको...",
+    "cancel": "रद्द करो",
+    "confirm": "पक्का",
+    "save": "सेव करो",
+    "delete": "हटाओ",
+    "back": "वापस",
+    "next": "आगे",
+    "done": "हो गया",
+    "retry": "फिर से कोशिश करो",
+    "error": "कुछ गड़बड़ हुई",
+    "noInternet": "Internet nahi hai",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "search": "खोजो",
+    "edit": "बदलो"
+  },
+  "tabs": {
+    "home": "घर",
+    "khata": "खाता",
+    "dukan": "दुकान",
+    "paisa": "पैसा",
+    "more": "और"
+  },
+  "home": {
+    "goodMorning": "सुप्रभात",
+    "goodAfternoon": "नमस्ते",
+    "goodEvening": "शुभ संध्या",
+    "todaySales": "आज की बिक्री",
+    "profit": "मुनाफा",
+    "outstanding": "उधार बाकी",
+    "stockAlert": "स्टॉक अलर्ट",
+    "askAnything": "कुछ भी पूछो",
+    "recentTransactions": "आज के transactions",
+    "noTransactions": "आज कोई transaction नहीं है"
+  },
+  "auth": {
+    "enterPhone": "अपना phone number डालो",
+    "sendOtp": "OTP भेजो",
+    "enterOtp": "OTP डालो",
+    "verify": "Verify करो",
+    "resendOtp": "OTP नहीं आया? दोबारा भेजो",
+    "resendIn": "Resend {{seconds}}s baad",
+    "invalidOtp": "OTP ग़लत है, दोबारा try करो",
+    "invalidPhone": "Phone number सही नहीं है",
+    "shopNameQuestion": "अपनी दुकान का नाम बोलो",
+    "welcome": "बढ़िया में स्वागत है",
+    "tagline": "Business ho jayega badhiya!"
+  },
+  "onboarding": {
+    "typeTitle": "आपका business क्या है?",
+    "typeSub": "अपना business type चुनो",
+    "nameTitle": "दुकान का नाम क्या है?",
+    "nameSub": "जैसे आप अपने customers को बताते हैं",
+    "locationTitle": "आपका शहर कौनसा है?",
+    "locationSub": "ताकि हम आपके area के हिसाब से tips दे सकें",
+    "complianceTitle": "GST या Udyam है?",
+    "complianceSub": "अगर है तो डाल दो, वरना skip करो",
+    "gstinPlaceholder": "GSTIN optional",
+    "udyamPlaceholder": "Udyam number optional",
+    "next": "अगला",
+    "done": "Done · Dashboard पे जाओ",
+    "skip": "Skip"
+  },
+  "lock": {
+    "title": "वापस स्वागत है",
+    "subtitle": "Badhiya lock हो गया है — fingerprint लगाओ",
+    "tapHint": "Sensor को touch करो",
+    "retry": "दोबारा कोशिश करो",
+    "failed": "Authentication fail हुआ"
+  },
+  "khata": {
+    "title": "खाता",
+    "noCustomers": "अभी कोई ग्राहक नहीं",
+    "giveCredit": "उधार दो",
+    "receivePayment": "पैसे लो",
+    "sendReminder": "WhatsApp पर याद दिलाओ",
+    "overdue": "Overdue",
+    "aging": "Aging",
+    "paid": "Paid",
+    "urgent": "Urgent",
+    "totalOutstanding": "कुल बाकी",
+    "daysAgo": "{{count}} दिन पहले"
+  },
+  "dukan": {
+    "title": "मेरी दुकान",
+    "addProduct": "नया सामान जोड़ो",
+    "scanProduct": "बारकोड scan करो",
+    "lowStock": "कम स्टॉक",
+    "outOfStock": "खत्म हो गया",
+    "products": "{{count}} सामान"
+  },
+  "paisa": {
+    "title": "पैसा",
+    "revenue": "Revenue",
+    "expenses": "खर्चा",
+    "profitMargin": "Profit margin",
+    "thisMonth": "इस महीने",
+    "lastMonth": "पिछला महीना",
+    "healthScore": "Badhiya Score"
+  },
+  "voice": {
+    "listening": "सुन रहा हूँ...",
+    "processing": "समझ रहा हूँ...",
+    "tryAgain": "दोबारा बोलो",
+    "tapToSpeak": "बोलने के लिए tap करो"
+  }
+}

@@ -1,0 +1,24 @@
+# Badhiya voice round-trip E2E test — Sprint 1 Day 3 exit criterion.
+#
+# This test requires:
+#   - Backend running with BHASHINI_API_KEY + BHASHINI_USER_ID set
+#   - A real device with microphone + network access
+#   - Someone saying the Hindi sentence out loud when the test prompts
+#
+# Mostly for manual runs during Sprint 1. Automate in Phase 7 when voice
+# becomes a permanent feature with synthetic audio fixtures.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- tapOn: "Dev Bypass → Dashboard"
+- tapOn: "Voice De-risk"
+- assertVisible: "Sprint 1 · Day 3"
+- assertVisible: "Hold to record"
+# Manual step: hold the big saffron mic button and say the sentence.
+# Release. Wait 3 seconds.
+- extendedWaitUntil:
+    visible: "Transcription"
+    timeout: 8000
+- takeScreenshot: voice-transcription-success

@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+ios/
+android/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+*.apk
+*.aab
+*.ipa
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Debug
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Drizzle
+.drizzle/
+
+# Test artifacts
+coverage/
+.maestro/screenshots/

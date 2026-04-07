@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BADHIYA Mobile App — Complete Plan, Roadmap & Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ========== ROADMAP ========== */
+.roadmap{position:relative;padding-left:40px}
+.roadmap::before{content:"";position:absolute;left:14px;top:12px;bottom:12px;width:2px;background:linear-gradient(180deg,var(--saffron-500) 0%,var(--green-500) 100%)}
+.milestone{position:relative;padding-bottom:28px}
+.milestone::before{content:"";position:absolute;left:-32px;top:8px;width:18px;height:18px;border-radius:50%;background:var(--saffron-500);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--saffron-500)}
+.milestone.done::before{background:var(--green-500);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--green-500)}
+.milestone.now::before{background:var(--amber-500);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--amber-500);animation:pulse 2s infinite}
+.milestone-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--saffron-600)}
+.milestone h4{font-size:18px;margin-top:4px;margin-bottom:8px}
+.milestone p{font-size:14px;color:var(--ink-500)}
+.milestone ul{margin-top:10px;padding-left:20px}
+.milestone ul li{font-size:13px;color:var(--ink-700);padding:3px 0}
+
+/* ========== SCREEN-SPECIFIC STYLES ========== */
+.screen-hero{padding:20px 18px 14px;background:linear-gradient(180deg,#FFF4EB 0%,#FFFBF5 100%);border-bottom:1px solid var(--border)}
+.screen-hero .greet{font-size:12px;color:var(--ink-500);font-weight:500}
+.screen-hero .name{font-size:18px;font-weight:700;color:var(--ink-900);margin-top:2px}
+.screen-hero .shop{font-size:11px;color:var(--ink-400);margin-top:2px}
+.mic-fab{position:absolute;top:56px;right:18px;width:42px;height:42px;border-radius:12px;background:var(--gradient-saffron);display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 6px 14px rgba(255,107,0,.4)}
+
+.kpi-bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.kpi-tile{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px}
+.kpi-tile .lbl{font-size:10px;color:var(--ink-500);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.kpi-tile .val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:800;color:var(--ink-900);margin-top:4px}
+.kpi-tile .delta{font-size:10px;margin-top:3px;font-weight:600}
+.delta.up{color:var(--green-500)}
+.delta.down{color:var(--red-500)}
+.kpi-tile.saffron{background:linear-gradient(135deg,#FFF4EB,#FFE9D9);border-color:transparent}
+.kpi-tile.green{background:linear-gradient(135deg,#E8F6ED,#D8F0DF);border-color:transparent}
+.kpi-tile.amber{background:linear-gradient(135deg,#FFF4D6,#FFECB3);border-color:transparent}
+
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-400);margin:14px 0 8px}
+
+.txn-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.txn-row:last-child{border-bottom:none}
+.txn-avatar{width:34px;height:34px;border-radius:10px;background:var(--saffron-50);display:grid;place-items:center;color:var(--saffron-600);font-weight:700;font-size:13px;flex-shrink:0}
+.txn-info{flex:1;min-width:0}
+.txn-name{font-size:13px;font-weight:600;color:var(--ink-900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txn-meta{font-size:10px;color:var(--ink-400);margin-top:1px}
+.txn-amount{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.txn-amount.pos{color:var(--green-500)}
+.txn-amount.neg{color:var(--red-500)}
+
+.ai-pill{position:absolute;bottom:78px;left:14px;right:14px;background:var(--gradient-saffron);color:#fff;padding:14px 18px;border-radius:16px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:13px;box-shadow:0 10px 24px rgba(255,107,0,.35)}
+.ai-pill .orb{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.3);flex-shrink:0}
+
+.cust-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.cust-avatar{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+.cust-info{flex:1;min-width:0}
+.cust-name{font-size:13px;font-weight:700;color:var(--ink-900)}
+.cust-meta{font-size:10px;color:var(--ink-400);margin-top:2px}
+.cust-amount{text-align:right;flex-shrink:0}
+.cust-amount .big{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:var(--ink-900)}
+.cust-amount .badge{display:inline-block;padding:2px 7px;border-radius:6px;font-size:9px;font-weight:700;margin-top:2px}
+.badge-green{background:var(--green-50);color:var(--green-700)}
+.badge-amber{background:var(--amber-50);color:var(--amber-500)}
+.badge-red{background:var(--red-50);color:var(--red-500)}
+
+.splash-logo{width:120px;height:120px;border-radius:32px;background:var(--gradient-saffron);display:grid;place-items:center;color:#fff;font-size:64px;font-weight:800;margin:0 auto;box-shadow:0 20px 50px rgba(255,107,0,.4)}
+
+.voice-orb{width:140px;height:140px;border-radius:50%;background:var(--gradient-saffron);margin:30px auto;display:grid;place-items:center;color:#fff;font-size:48px;box-shadow:0 0 0 12px rgba(255,107,0,.12),0 0 0 24px rgba(255,107,0,.06),0 20px 50px rgba(255,107,0,.35);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+.cta-primary{background:var(--gradient-saffron);color:#fff;border:none;border-radius:14px;padding:14px 20px;font-size:14px;font-weight:700;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 20px rgba(255,107,0,.3)}
+.cta-secondary{background:#fff;border:1.5px solid var(--border-strong);color:var(--ink-900);border-radius:14px;padding:14px 20px;font-size:14px;font-weight:700;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px}
+
+.gauge-ring{width:160px;height:160px;margin:0 auto;position:relative}
+.gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge-num{font-family:'JetBrains Mono',monospace;font-size:38px;font-weight:800;color:var(--ink-900)}
+.gauge-lbl{font-size:10px;color:var(--ink-400);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+
+.chip{display:inline-block;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:600;border:1px solid var(--border-strong);background:#fff;color:var(--ink-700);margin-right:6px;margin-bottom:6px}
+.chip.active{background:var(--saffron-500);color:#fff;border-color:var(--saffron-500)}
+
+.product-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:10px}
+.product-img{height:70px;border-radius:8px;background:linear-gradient(135deg,#FFE9D9,#FFD4B0);margin-bottom:8px;display:grid;place-items:center;font-size:28px}
+.product-name{font-size:12px;font-weight:700;color:var(--ink-900)}
+.product-price{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;color:var(--saffron-600);margin-top:2px}
+.product-stock{font-size:10px;color:var(--ink-400);margin-top:2px}
+
+.hearing-row{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px}
+
+.ins-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.ins-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ins-dot{width:8px;height:8px;border-radius:50%;background:var(--saffron-500)}
+.ins-title{font-size:12px;font-weight:700;color:var(--ink-900)}
+.ins-body{font-size:12px;color:var(--ink-700);line-height:1.5}
+
+.ai-msg{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.ai-msg.user{background:var(--saffron-500);color:#fff;margin-left:40px;border-color:var(--saffron-500)}
+.ai-msg.bot{margin-right:40px}
+.ai-msg p{font-size:12px;line-height:1.5;color:inherit}
+
+.setting-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.setting-icon{width:32px;height:32px;border-radius:9px;background:var(--saffron-50);display:grid;place-items:center;color:var(--saffron-600);font-size:14px;flex-shrink:0}
+.setting-label{flex:1;font-size:13px;font-weight:600;color:var(--ink-900)}
+.setting-chev{color:var(--ink-300);font-size:16px}
+
+.scheme-card{background:linear-gradient(135deg,#1A56DB,#3B82F6);color:#fff;border-radius:14px;padding:14px;margin-bottom:10px}
+.scheme-card h5{font-size:13px;font-weight:700;margin-bottom:4px}
+.scheme-card .amt{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;margin:6px 0}
+.scheme-card .meta{font-size:10px;opacity:.85}
+
+.loan-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.loan-card .row{display:flex;justify-content:space-between;align-items:flex-start}
+.loan-name{font-size:13px;font-weight:700;color:var(--ink-900)}
+.loan-rate{font-size:10px;color:var(--ink-400);margin-top:2px}
+.loan-amt{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:800;color:var(--green-500)}
+
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.badge-coin{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#F9A825,#FFC107);display:grid;place-items:center;color:#fff;font-size:22px;box-shadow:0 6px 14px rgba(249,168,37,.4)}
+.badge-coin.locked{background:#E3D5BB;box-shadow:none;opacity:.6}
+
+:root{
+  --saffron-50:#FFF4EB;--saffron-100:#FFE9D9;--saffron-200:#FFD4B0;--saffron-300:#FFB078;
+  --saffron-400:#FF8C38;--saffron-500:#FF6B00;--saffron-600:#E55F00;--saffron-700:#B84C00;
+  --green-50:#D8F0DF;--green-400:#2FB559;--green-500:#1B8C3A;--green-700:#0F5B23;
+  --red-500:#C13030;--red-50:#FDEAEA;
+  --amber-500:#E89B00;--amber-50:#FFF4D6;
+  --blue-500:#1A56DB;--blue-50:#E5EDFB;
+  --bg:#FFFBF5;--surface:#FFFFFF;--border:#F0E6D6;--border-strong:#E3D5BB;
+  --ink-900:#1A1611;--ink-700:#3A332A;--ink-500:#5C5347;--ink-400:#8A8073;--ink-300:#B5AA98;
+  --radius:16px;--radius-lg:24px;--radius-sm:10px;
+  --shadow-sm:0 2px 6px rgba(26,22,17,.04);
+  --shadow:0 8px 24px rgba(26,22,17,.06);
+  --shadow-lg:0 24px 60px rgba(26,22,17,.10);
+  --tricolor:linear-gradient(90deg,#FF6B00 0%,#FF6B00 33%,#FFFFFF 33%,#FFFFFF 66%,#1B8C3A 66%,#1B8C3A 100%);
+  --gradient-saffron:linear-gradient(135deg,#FF8C38 0%,#FF6B00 100%);
+  --gradient-warm:linear-gradient(180deg,#FFFBF5 0%,#FFF4EB 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter','Hind',system-ui,sans-serif;background:var(--bg);color:var(--ink-900);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.2}
+h1{font-size:clamp(32px,5vw,56px)}
+h2{font-size:clamp(26px,3.5vw,40px);margin-bottom:16px}
+h3{font-size:clamp(20px,2.2vw,26px);margin-bottom:12px}
+h4{font-size:18px;margin-bottom:8px}
+p{color:var(--ink-700)}
+a{color:var(--saffron-600);text-decoration:none}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.9em}
+.container{max-width:1240px;margin:0 auto;padding:0 24px}
+.container-narrow{max-width:920px;margin:0 auto;padding:0 24px}
+
+/* ========== NAV ========== */
+nav.topnav{position:sticky;top:0;z-index:100;background:rgba(255,251,245,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1240px;margin:0 auto;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--ink-900)}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:var(--gradient-saffron);display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:0 4px 12px rgba(255,107,0,.35)}
+.nav-links{display:flex;gap:24px;flex-wrap:wrap}
+.nav-links a{color:var(--ink-700);font-weight:500;font-size:14px;transition:color .2s}
+.nav-links a:hover{color:var(--saffron-600)}
+@media(max-width:760px){.nav-links{display:none}}
+
+/* ========== HERO ========== */
+.hero{position:relative;padding:80px 24px 100px;overflow:hidden;background:var(--gradient-warm)}
+.hero::before{content:"";position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.12) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(27,140,58,.08) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1240px;margin:0 auto;position:relative}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-700);margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.hero .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--saffron-500);box-shadow:0 0 0 4px rgba(255,107,0,.2)}
+.hero h1{margin-bottom:20px}
+.hero h1 .accent{background:linear-gradient(135deg,#FF6B00,#FF8C38);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:19px;color:var(--ink-500);max-width:760px;margin-bottom:40px}
+.hero .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;max-width:920px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.stat .value{font-size:30px;font-weight:800;color:var(--saffron-600);letter-spacing:-.02em}
+.stat .label{font-size:13px;color:var(--ink-500);margin-top:4px;font-weight:500}
+.tricolor-bar{height:4px;width:120px;background:var(--tricolor);border-radius:2px;margin-top:40px}
+
+/* ========== SECTIONS ========== */
+section{padding:80px 0;border-top:1px solid var(--border)}
+section.hero{border-top:none;padding-bottom:100px}
+.section-eyebrow{display:inline-block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--saffron-600);margin-bottom:12px}
+.section-header{margin-bottom:48px;max-width:820px}
+.section-header p{font-size:17px;color:var(--ink-500)}
+
+/* ========== CARDS / GRIDS ========== */
+.grid{display:grid;gap:20px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card h3,.card h4{margin-bottom:10px}
+.card p{font-size:14px;color:var(--ink-500);line-height:1.6}
+.card .icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;font-size:22px;font-weight:700}
+.icon-saffron{background:var(--saffron-50);color:var(--saffron-600)}
+.icon-green{background:var(--green-50);color:var(--green-500)}
+.icon-blue{background:var(--blue-50);color:var(--blue-500)}
+.icon-red{background:var(--red-50);color:var(--red-500)}
+.icon-amber{background:var(--amber-50);color:var(--amber-500)}
+
+/* ========== TABLES ========== */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--saffron-50);font-weight:700;color:var(--ink-900);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:none}
+td.num{font-family:'JetBrains Mono',monospace;text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.tag-yes{background:var(--green-50);color:var(--green-700)}
+.tag-no{background:var(--red-50);color:var(--red-500)}
+.tag-partial{background:var(--amber-50);color:var(--amber-500)}
+.tag-new{background:var(--saffron-50);color:var(--saffron-600)}
+
+/* ========== PHONE MOCKUPS ========== */
+.phone-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px 32px;margin-top:40px}
+.phone-wrap{display:flex;flex-direction:column;align-items:center}
+.phone{width:320px;height:660px;background:#0F0A05;border-radius:42px;padding:12px;box-shadow:0 30px 60px -20px rgba(26,22,17,.25),0 0 0 2px #2a2218 inset;position:relative}
+.phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:100px;height:22px;background:#0F0A05;border-radius:12px;z-index:2}
+.phone-screen{width:100%;height:100%;background:var(--bg);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.status-bar{height:38px;padding:14px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--ink-900);flex-shrink:0}
+.phone-header{padding:12px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0}
+.phone-header .title{font-weight:700;font-size:17px}
+.phone-header .subtitle{font-size:11px;color:var(--ink-400);margin-top:2px}
+.phone-body{flex:1;overflow:hidden;padding:14px 16px 70px;background:var(--bg)}
+.phone-body::-webkit-scrollbar{display:none}
+.tab-bar{position:absolute;bottom:0;left:0;right:0;height:62px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:6px 8px 10px}
+.tab-item{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;font-size:9px;font-weight:600;color:var(--ink-400)}
+.tab-item.active{color:var(--saffron-500)}
+.tab-icon{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:14px}
+.tab-item.active .tab-icon{background:var(--saffron-50)}
+.phone-caption{margin-top:18px;text-align:center;max-width:280px}
+.phone-caption h4{font-size:15px;color:var(--ink-900);margin-bottom:4px}
+.phone-caption p{font-size:12px;color:var(--ink-500);line-height:1.5}
+.phone-caption .route{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--saffron-600);background:var(--saffron-50);display:inline-block;padding:2px 8px;border-radius:6px;margin-top:6px}
+
+/* ========== FOOTER ========== */
+footer{padding:60px 24px;background:var(--ink-900);color:#fff;text-align:center}
+footer .tricolor-bar{margin:0 auto 24px}
+footer p{color:#B5AA98;font-size:14px}
+footer h3{color:#fff;margin-bottom:12px}
+
+/* ========== UTILITIES ========== */
+.pill{display:inline-block;padding:6px 14px;background:var(--saffron-50);color:var(--saffron-600);border-radius:999px;font-size:12px;font-weight:600}
+.check{color:var(--green-500);font-weight:700}
+.cross{color:var(--red-500);font-weight:700}
+ul.clean{list-style:none;padding:0}
+ul.clean li{padding:8px 0 8px 24px;position:relative;font-size:14px;color:var(--ink-700)}
+ul.clean li::before{content:"▸";position:absolute;left:0;color:var(--saffron-500);font-weight:700}
+.callout{background:#fff;border:1px solid var(--border);border-left:4px solid var(--saffron-500);border-radius:var(--radius);padding:20px 24px;margin:24px 0;box-shadow:var(--shadow-sm)}
+.callout strong{color:var(--ink-900)}
+.callout.warn{border-left-color:var(--amber-500)}
+.callout.success{border-left-color:var(--green-500)}
+</style>
+</head>
+<body>
+
+<!-- ========== TOP NAV ========== -->
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">B</span>
+      <span>BADHIYA <span style="font-family:'Hind';font-weight:600;font-size:16px;color:var(--ink-400);margin-left:4px">बढ़िया</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#summary">Overview</a>
+      <a href="#baseline">CourtNetra</a>
+      <a href="#competitors">Market</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#design">Design</a>
+      <a href="#screens">Screens</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="dot"></span> Mobile App Plan · April 2026 · v1.0</span>
+    <h1>Business ho jayega <span class="accent">badhiya!</span></h1>
+    <p class="lead">The complete plan, research-backed tech stack, Indian-themed design system, and screen-by-screen blueprint for the BADHIYA mobile app — an AI-powered, WhatsApp-native, voice-first business OS for 63 million Indian MSMEs. Built to leapfrog CourtNetra's baseline and every incumbent in the Indian MSME software market.</p>
+    <div class="stats">
+      <div class="stat"><div class="value">63M+</div><div class="label">Indian MSMEs</div></div>
+      <div class="stat"><div class="value">500M+</div><div class="label">WhatsApp users in India</div></div>
+      <div class="stat"><div class="value">11+</div><div class="label">Vernacular languages</div></div>
+      <div class="stat"><div class="value">98.4%</div><div class="label">AI cost savings (7-layer)</div></div>
+    </div>
+    <div class="tricolor-bar"></div>
+  </div>
+</section>
+
+<!-- ========== EXECUTIVE SUMMARY ========== -->
+<section id="summary">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Executive Summary</span>
+      <h2>What we're building & why it wins</h2>
+      <p>BADHIYA is a WhatsApp-native, voice-first, AI-powered business OS for the 63 million Indian MSMEs that every billing/ledger/payment app has ignored. The backend is already production-grade (NestJS + 7-layer AI pipeline + 12 migrations + 22 modules). This document plans the <strong>mobile app (Channel 2)</strong> — the app that the shopkeeper's next-gen inheritor "Priya" will live inside.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon icon-saffron">1</div>
+        <h3>The Gap</h3>
+        <p>90% of MSMEs accept digital payments. Only 12% are digitally mature. Every existing app owns 1-2 layers — billing (Vyapar), ledger (Khatabook), payments (PhonePe). None stacks AI advisor + WhatsApp-native + voice + health score + NBFC marketplace + ONDC + gamification.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-green">2</div>
+        <h3>The Whitespace</h3>
+        <p>Research confirmed no incumbent holds more than 2 of these axes. Pilloo AI (voice-AP only), SayBill (WA+voice-narrow), Meta-MoMSME chatbot (generic, not transactional). Badhiya has a ~12 month window before these mature a second axis.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-blue">3</div>
+        <h3>The Bet</h3>
+        <p>Ship on Expo SDK 55 + New Architecture + Hermes V1 + Legend State v3 + Drizzle + Victory XL + Maestro. Make it feel like CRED meets WhatsApp meets Khatabook meets a bahi-khata page. Voice is the hero, not the keyboard.</p>
+      </div>
+    </div>
+    <div class="callout success">
+      <strong>The one-sentence positioning:</strong> Badhiya is the only MSME mobile app where Rajesh the kirana owner can say <em>"Sharma ji ko 5 kilo aata 250 rupaye ka bill bana do"</em> in Hindi, and the app records the sale, generates a GST invoice, updates inventory, sends the invoice on WhatsApp, updates the health score, recommends a PMEGP loan if eligible — all in under 4 seconds, offline-capable, and gamified.
+    </div>
+  </div>
+</section>
+
+<!-- ========== COURTNETRA BASELINE ========== -->
+<section id="baseline">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Baseline Analysis</span>
+      <h2>CourtNetra — what we must beat</h2>
+      <p>CourtNetra is a production legal-practice-management mobile app (21 releases, v1.0.0 → v2.1.0). It's a solid reference for the class of app we're building. Here's what they use, and where Badhiya will be strictly better.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>CourtNetra's Stack (Nov 2025 snapshot)</h3>
+        <ul class="clean">
+          <li><strong>Expo SDK 54</strong> · expo-router 6 · React Native 0.81 · React 19.1</li>
+          <li><strong>Zustand</strong> for client state (auth, timer, features, language, client-auth)</li>
+          <li><strong>TanStack Query v5</strong> for server data</li>
+          <li><strong>Axios</strong> for HTTP</li>
+          <li><strong>Reanimated 4</strong> + react-native-worklets</li>
+          <li><strong>react-native-gifted-charts</strong> for charts (SVG-based)</li>
+          <li><strong>expo-sqlite</strong> for offline</li>
+          <li><strong>expo-av</strong> for audio (being removed in SDK 55)</li>
+          <li><strong>expo-local-authentication</strong>, <strong>expo-notifications</strong>, <strong>expo-haptics</strong></li>
+          <li>File structure: <code>app/</code> (routes) + <code>src/</code> (components, hooks, lib, stores, theme)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Where Badhiya Leapfrogs</h3>
+        <ul class="clean">
+          <li><strong>Expo SDK 55</strong> (RN 0.83, React 19.2) — one generation ahead, Hermes V1 opt-in, OTA diffing</li>
+          <li><strong>Legend State v3</strong> (signals + built-in sync) replaces Zustand — no DIY mutation queue</li>
+          <li><strong>Drizzle ORM</strong> on expo-sqlite — type-safe queries, declarative migrations, <code>useLiveQuery</code> reactivity</li>
+          <li><strong>Victory Native XL</strong> (Skia-backed, GPU) replaces gifted-charts — 60fps on ₹8K phones</li>
+          <li><strong>expo-audio</strong> replaces removed expo-av</li>
+          <li><strong>expo-background-task</strong> replaces deprecated expo-background-fetch</li>
+          <li><strong>expo-speech-recognition</strong> + Bhashini server hybrid for Hindi STT</li>
+          <li><strong>react-native-vision-camera</strong> + ML Kit OCR for receipt scanning</li>
+          <li><strong>react-native-mmkv</strong> for 30x faster KV storage</li>
+          <li><strong>Maestro</strong> for E2E (CourtNetra has none visible)</li>
+          <li>New Architecture <strong>on from day 1</strong> — no migration debt</li>
+          <li>Full i18n with <strong>i18next</strong> — Hindi default, 11-language ready</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn">
+      <strong>Hard migration constraint:</strong> <code>expo-av</code> is removed in SDK 55. CourtNetra will have to migrate audio to <code>expo-audio</code> soon. Badhiya starts fresh on SDK 55, so we skip that tax entirely.
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMPETITORS ========== -->
+<section id="competitors">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Market Research</span>
+      <h2>Indian MSME mobile app battlefield, 2026</h2>
+      <p>Three background agents scraped the market. Here's the matrix: 12 competitors, 14 capability axes, and the whitespace Badhiya occupies. No incumbent has more than <strong>2 of the 10 defensible axes</strong> stacked.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>App</th>
+            <th>Core</th>
+            <th>Users</th>
+            <th>Offline</th>
+            <th>Voice</th>
+            <th>WA-Native</th>
+            <th>AI Advisor</th>
+            <th>Khata</th>
+            <th>NBFC</th>
+            <th>ONDC</th>
+            <th>Schemes</th>
+            <th>Score</th>
+            <th>Gamify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Vyapar</strong></td><td>GST billing</td><td>10M+</td><td><span class="tag tag-yes">Strong</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">Reminders</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-partial">Basic</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>Khatabook</strong></td><td>Ledger</td><td>50M+ DL</td><td><span class="tag tag-partial">Partial</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">Reminders</span></td><td><span class="tag tag-no">Limited</span></td><td><span class="tag tag-yes">Strong</span></td><td><span class="tag tag-partial">Partners</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>OkCredit</strong></td><td>Ledger + UPI</td><td>5.5M+</td><td><span class="tag tag-partial">Partial</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">Reminders</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-yes">Strong</span></td><td><span class="tag tag-no">Shut</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>Dukaan</strong></td><td>DTC stores</td><td>~2.3K live</td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">Share</span></td><td><span class="tag tag-partial">CS bot</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-partial">Ltd</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>Pilloo AI</strong> <span class="tag tag-new">NEW</span></td><td>Voice billing</td><td>New, AP only</td><td><span class="tag tag-partial">?</span></td><td><span class="tag tag-yes">5 langs</span></td><td><span class="tag tag-no">Unclear</span></td><td><span class="tag tag-yes">Accounting</span></td><td><span class="tag tag-no">Limited</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>myBillBook</strong></td><td>GST billing</td><td>1Cr+</td><td><span class="tag tag-partial">Limited</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">Reminders</span></td><td><span class="tag tag-partial">Light</span></td><td><span class="tag tag-yes">Yes</span></td><td><span class="tag tag-yes">Partners</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>Paytm Biz</strong></td><td>Payments + AI</td><td>Tens of M</td><td><span class="tag tag-no">Online</span></td><td><span class="tag tag-partial">Limited</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-partial">Spend</span></td><td><span class="tag tag-partial">Basic</span></td><td><span class="tag tag-yes">Credit</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-partial">Coins</span></td></tr>
+          <tr><td><strong>BharatPe</strong></td><td>UPI + loans</td><td>~1Cr</td><td><span class="tag tag-no">Online</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">SMS</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-yes">UPI Bahi</span></td><td><span class="tag tag-yes">10K-10L</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>PhonePe Biz</strong></td><td>Payments</td><td>47M</td><td><span class="tag tag-no">Online</span></td><td><span class="tag tag-partial">Speaker</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-yes">50K-5L</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr><td><strong>SayBill</strong> <span class="tag tag-new">NEW</span></td><td>WA voice billing</td><td>New</td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-yes">10+ langs</span></td><td><span class="tag tag-yes">Native</span></td><td><span class="tag tag-yes">Cashflow</span></td><td><span class="tag tag-partial">Light</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td><td><span class="tag tag-no">No</span></td></tr>
+          <tr style="background:var(--saffron-50)"><td><strong>BADHIYA</strong> <span class="tag tag-new">OURS</span></td><td>Full MSME OS</td><td>Target 10K Y1</td><td><span class="tag tag-yes">First-class</span></td><td><span class="tag tag-yes">11+ langs</span></td><td><span class="tag tag-yes">Native</span></td><td><span class="tag tag-yes">7-layer AI</span></td><td><span class="tag tag-yes">Full</span></td><td><span class="tag tag-yes">Marketplace</span></td><td><span class="tag tag-yes">1-tap</span></td><td><span class="tag tag-yes">100+</span></td><td><span class="tag tag-yes">0-900</span></td><td><span class="tag tag-yes">Streaks</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:60px;margin-bottom:20px">The 10 Capabilities NO ONE Does Well</h3>
+    <div class="grid grid-3">
+      <div class="card"><div class="icon icon-saffron">1</div><h4>WhatsApp-native end-to-end</h4><p>Incumbents send reminders to WA. None runs the full business (billing, khata, inventory, loans, advisor) inside WhatsApp Flows.</p></div>
+      <div class="card"><div class="icon icon-saffron">2</div><h4>Voice-first vernacular AI advisor</h4><p>Pilloo/SayBill do voice billing. Nobody does a full advisor that explains margin trends and answers "kal kitna kamaya?"</p></div>
+      <div class="card"><div class="icon icon-saffron">3</div><h4>Public Business Health Score (0-900)</h4><p>CIBIL exists for individuals. No consumer MSME app gives a single, gamified health number that unlocks loans.</p></div>
+      <div class="card"><div class="icon icon-saffron">4</div><h4>In-app govt scheme matching</h4><p>CHAMPIONS exists but is grievance-led. No kirana app says "You qualify for PMEGP — 1-tap apply."</p></div>
+      <div class="card"><div class="icon icon-saffron">5</div><h4>ONDC onboarding in 2 taps</h4><p>ONDC has 3L+ sellers but is brutally hard to join from a phone in a tier-3 town. Nobody has cracked the UX.</p></div>
+      <div class="card"><div class="icon icon-saffron">6</div><h4>Multi-NBFC loan marketplace</h4><p>BharatPe/PhonePe lock you into one lender. A 5-NBFC bidding marketplace inside a billing app is open ground.</p></div>
+      <div class="card"><div class="icon icon-saffron">7</div><h4>Gamified streaks & health journey</h4><p>Paytm has Gold Coins on consumer side. Nothing equivalent for merchants. Streaks build the daily-billing habit.</p></div>
+      <div class="card"><div class="icon icon-saffron">8</div><h4>Offline-first AI</h4><p>Vyapar has best offline sync. Nobody has offline-first AI advice (on-device LLM + sync). Tier-3 connectivity makes this critical.</p></div>
+      <div class="card"><div class="icon icon-saffron">9</div><h4>Full stack in one app</h4><p>Each incumbent owns 1-2 layers. Nobody owns voice-billing → ledger → inventory → loan disbursal → ONDC sale in one flow.</p></div>
+      <div class="card"><div class="icon icon-saffron">10</div><h4>Code-switched Hinglish UX</h4><p>Indians speak Hinglish, Tanglish, Tenglish. Apps have "language pickers" — not real code-switched voice/text understanding.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TECH STACK ========== -->
+<section id="stack">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Recommended Tech Stack</span>
+      <h2>Expo SDK 55 + New Arch + Hermes V1</h2>
+      <p>Research date: 2026-04-07. SDK 55 shipped Feb 25, 2026 (RN 0.83 + React 19.2). SDK 56 (RN 0.85) lands Q2 2026. We build on <strong>stable SDK 55 today</strong> with a planned Q3 2026 jump. Strict pinning at framework boundary, caret elsewhere. Never chase canaries.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Concern</th><th>Library</th><th>Version</th><th>Why</th><th>Rejected</th></tr></thead>
+        <tbody>
+          <tr><td>Framework</td><td><code>expo</code></td><td class="mono">~55.0.9</td><td>RN 0.83, React 19.2, Xcode 26, Hermes diffing OTA, Native Tabs, expo-av purged</td><td>SDK 54 (stale), SDK 56 canary</td></tr>
+          <tr><td>Runtime</td><td><code>react-native</code></td><td class="mono">0.83.x</td><td>First RN with zero user-facing breaking changes; New Arch only; guaranteed bridgeless</td><td>0.82, 0.84</td></tr>
+          <tr><td>React</td><td><code>react</code></td><td class="mono">19.2.0</td><td>Stable concurrent features, better Suspense</td><td>—</td></tr>
+          <tr><td>Router</td><td><code>expo-router</code></td><td class="mono">~6.x</td><td>File-based, typed routes, deep-link friendly for WhatsApp → Badhiya, static web rendering path</td><td>React Navigation 7 raw, Solito</td></tr>
+          <tr><td>State (client)</td><td><code>@legendapp/state</code></td><td class="mono">^3.x</td><td>3KB signals, fine-grained reactivity, built-in offline sync engine (<code>syncedFetch</code>), MMKV persistence — kills DIY mutation queue</td><td>Zustand (no sync), Jotai, Valtio, RTK</td></tr>
+          <tr><td>State (server)</td><td><code>@tanstack/react-query</code></td><td class="mono">^5.96+</td><td>Industry standard, background sync, optimistic updates, offline mutation queue</td><td>tRPC (backend REST-first), SWR</td></tr>
+          <tr><td>Validation</td><td><code>zod</code></td><td class="mono">^3.x</td><td>Validate every NestJS response at the boundary (matches global rules)</td><td>Yup, Joi</td></tr>
+          <tr><td>Local DB</td><td><code>expo-sqlite</code> + <code>drizzle-orm</code></td><td class="mono">~16 / ^0.30+</td><td>JSI-direct, <code>useLiveQuery</code> reactive hook, Drizzle gives type-safe queries + declarative migrations + multi-tenant via per-org DB files</td><td>WatermelonDB (heavy), PowerSync, RxDB, ElectricSQL (dead)</td></tr>
+          <tr><td>Sync engine</td><td><code>@legendapp/state/sync</code></td><td class="mono">bundled</td><td>Optimistic writes, persistent retry queue across app restarts, minimal-diff sync</td><td>Custom queue in Zustand</td></tr>
+          <tr><td>KV cache</td><td><code>react-native-mmkv</code></td><td class="mono">^3.x</td><td>30x faster than AsyncStorage, synchronous, AES-256, JSI-native</td><td>AsyncStorage (slow)</td></tr>
+          <tr><td>Secure secrets</td><td><code>expo-secure-store</code></td><td class="mono">~15.x</td><td>Keychain/Keystore for refresh tokens, PIN hash</td><td>—</td></tr>
+          <tr><td>Animations</td><td><code>react-native-reanimated</code></td><td class="mono">~4.x</td><td>CSS-style transitions, UI-thread execution, mandatory peer for Skia/Victory XL</td><td>Moti (extra layer), Animated API</td></tr>
+          <tr><td>Gestures</td><td><code>react-native-gesture-handler</code></td><td class="mono">~2.x</td><td>Mandatory pair with Reanimated 4</td><td>—</td></tr>
+          <tr><td>Skia drawing</td><td><code>@shopify/react-native-skia</code></td><td class="mono">^2.x</td><td>GPU canvas for health score gauge, voice waveform, AI orb, Hindi rupee odometer</td><td>Lottie (static only)</td></tr>
+          <tr><td>Lottie</td><td><code>lottie-react-native</code></td><td class="mono">^7.x</td><td>Designer-handoff vector animations — onboarding, empty states, success celebrations</td><td>—</td></tr>
+          <tr><td>Charts</td><td><code>victory-native</code> XL</td><td class="mono">^41.x</td><td>Skia + Reanimated + Gesture Handler backed, GPU-rendered, real-time capable — dramatically more premium than gifted-charts</td><td>gifted-charts (CN's choice — dated), chart-kit (unmaintained)</td></tr>
+          <tr><td>Camera</td><td><code>react-native-vision-camera</code></td><td class="mono">^4.x</td><td>Frame processors, multi-code support, ML Kit plugin for OCR in the same camera session</td><td>expo-camera (no frame processors)</td></tr>
+          <tr><td>Receipt OCR</td><td><code>vision-camera-mlkit</code></td><td class="mono">latest</td><td>On-device, free, Devanagari supported, no PII leaves phone — DPDP Act compliant</td><td>Google Vision API (cost + privacy)</td></tr>
+          <tr><td>Audio</td><td><code>expo-audio</code></td><td class="mono">~0.5+</td><td><strong>expo-av is REMOVED in SDK 55.</strong> New hook API, modern</td><td>expo-av (removed)</td></tr>
+          <tr><td>STT (Hindi)</td><td><code>expo-speech-recognition</code> + Bhashini (server)</td><td class="mono">latest</td><td>On-device for English + privacy-friendly. Bhashini fallback for code-switched Hindi/regional</td><td>react-native-voice, Whisper (model too big)</td></tr>
+          <tr><td>TTS</td><td><code>expo-speech</code></td><td class="mono">~14.x</td><td>OS-provided Hindi voices. Upgrade to Bhashini TTS later</td><td>—</td></tr>
+          <tr><td>Push</td><td><code>expo-notifications</code></td><td class="mono">~0.32+</td><td>FCM v1 migration done, unified APNs + FCM</td><td>OneSignal (vendor lock), bare RN Firebase</td></tr>
+          <tr><td>Background</td><td><code>expo-background-task</code></td><td class="mono">latest</td><td><strong>expo-background-fetch is deprecated.</strong> BGTaskScheduler + WorkManager, battery-safe. Critical for 7 AM morning briefing</td><td>expo-background-fetch (deprecated)</td></tr>
+          <tr><td>Forms</td><td><code>react-hook-form</code> + <code>@hookform/resolvers</code></td><td class="mono">^7.x</td><td>Uncontrolled = fewer re-renders on entry-tier Androids, mature, Zod integration</td><td>TanStack Form (controlled-only), Formik (dead)</td></tr>
+          <tr><td>i18n</td><td><code>i18next</code> + <code>react-i18next</code> + <code>expo-localization</code></td><td class="mono">latest</td><td>Namespace-per-feature, lazy-load translations, Hindi plural rules</td><td>LinguiJS, Format.JS</td></tr>
+          <tr><td>Biometric</td><td><code>expo-local-authentication</code></td><td class="mono">~17.x</td><td>Keychain/Keystore biometric, PIN fallback</td><td>—</td></tr>
+          <tr><td>Haptics</td><td><code>expo-haptics</code></td><td class="mono">~15.x</td><td>Centralized via <code>services/haptics.ts</code> — never called from components directly</td><td>—</td></tr>
+          <tr><td>Deep links</td><td><code>expo-linking</code></td><td class="mono">bundled</td><td>UPI intent <code>upi://pay?pa=...</code>, WhatsApp <code>wa.me</code> — native, no extra dep</td><td>Abandoned UPI SDK wrappers</td></tr>
+          <tr><td>Image</td><td><code>expo-image</code> + <code>expo-image-manipulator</code></td><td class="mono">latest</td><td>SDWebImage/Glide-backed, blurhash, placeholder, pre-upload compress to &lt;500KB</td><td>RN Image (slow)</td></tr>
+          <tr><td>Document picker</td><td><code>expo-document-picker</code></td><td class="mono">~14.x</td><td>Invoice attach, GST upload</td><td>—</td></tr>
+          <tr><td>Build / OTA</td><td>EAS Build + EAS Update</td><td class="mono">—</td><td>Hermes bytecode diffing = ~25% of full bundle. For tier-3 India on metered data, non-negotiable</td><td>Codemagic, Bitrise, App Center (retired)</td></tr>
+          <tr><td>E2E tests</td><td><code>Maestro</code></td><td class="mono">latest</td><td>YAML, &lt;1% flakiness, real device cloud, no native code changes, reads Hindi labels</td><td>Detox (JS-heavy), Appium</td></tr>
+          <tr><td>Unit tests</td><td><code>jest</code> + <code>@testing-library/react-native</code></td><td class="mono">latest</td><td>Standard, satisfies 80% coverage rule</td><td>—</td></tr>
+          <tr><td>Crash + perf</td><td><code>@sentry/react-native</code></td><td class="mono">latest</td><td>Most mature symbolication + source maps</td><td>Bugsnag (paid-only)</td></tr>
+          <tr><td>Analytics + replay</td><td><code>posthog-react-native</code></td><td class="mono">latest</td><td>Funnels, flags, session replay, self-host path for India data residency</td><td>GlitchTip (no analytics)</td></tr>
+          <tr><td>Custom native</td><td><code>react-native-nitro-modules</code></td><td class="mono">latest</td><td>Only if we write native — 15x faster than TurboModules, 59x vs ExpoModules</td><td>TurboModules, ExpoModules</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:60px;margin-bottom:20px">Version Pinning Strategy</h3>
+    <div class="grid grid-2">
+      <div class="card">
+        <h4>🔒 Strict pinning (exact)</h4>
+        <ul class="clean">
+          <li><code>expo</code> — exact version, let <code>npx expo install</code> resolve everything managed</li>
+          <li><code>react-native</code> — managed by Expo resolver</li>
+          <li>All <code>expo-*</code> packages — <code>npx expo install &lt;pkg&gt;</code>, never freelance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>~ Tilde (patch only)</h4>
+        <ul class="clean">
+          <li>Third-party native libs: Reanimated, Gesture Handler, Skia, Vision Camera, Drizzle, Legend State, MMKV</li>
+          <li>Major bumps require a planning ticket, never opportunistic</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>^ Caret (minor allowed)</h4>
+        <ul class="clean">
+          <li>Pure JS libs: zod, react-hook-form, i18next, axios, TanStack Query</li>
+          <li>Stack bumps: one cadence per quarter, scheduled, never ad-hoc</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🚢 OTA channels</h4>
+        <ul class="clean">
+          <li><code>production</code> — pinned to latest native binary-compatible JS bundle</li>
+          <li><code>staging</code> — diffing tests, internal QA</li>
+          <li><code>dev</code> — canary builds, feature flags</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:32px">
+      <strong>Migration risks (blocking):</strong>
+      <ol style="margin:12px 0 0 20px;color:var(--ink-700);font-size:14px">
+        <li><strong>expo-av is GONE in SDK 55</strong> — must use expo-audio from day 1 (we are).</li>
+        <li><strong>Old Architecture is gone</strong> — every native dep must be New-Arch-compatible. Audit before installing.</li>
+        <li><strong>Xcode 26 required</strong> for SDK 55 iOS builds. CI and contributors must update.</li>
+        <li><strong>Hermes V1 opt-in on SDK 55</strong> — test thoroughly before flipping; SDK 56 makes it default.</li>
+        <li><strong>Drizzle migrations on device</strong> — write a Maestro test for "open v1 data with v2 binary" path.</li>
+        <li><strong>CocoaPods EOL Dec 2 2026</strong> — plan SPM migration by end-2026.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DESIGN SYSTEM ========== -->
+<section id="design">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Design System</span>
+      <h2>Warm, trustworthy, distinctly Indian</h2>
+      <p>Built for Rajesh (38-52 year old kirana owner, 10th pass, Hindi-first, low digital literacy, ₹10K Android). Design philosophy: <strong>quiet trust over loud marketing</strong>. Saffron is an accent, never a flood. Every status has color + icon + Hindi label. Voice is the hero, keyboard is the escape hatch.</p>
+    </div>
+
+    <h3>15 UI/UX Principles (non-negotiable)</h3>
+    <div class="grid grid-3" style="margin-bottom:60px">
+      <div class="card"><div class="icon icon-saffron">1</div><h4>Digitize existing habits</h4><p>Every screen maps 1:1 to paper-world: ledger page, cash drawer, daily diary. No new metaphors invented.</p></div>
+      <div class="card"><div class="icon icon-saffron">2</div><h4>Voice &gt; vernacular text</h4><p>Hindi translations fail ("anivarya" lost to "zaroori"). Voice-first, copy written by Tier-3 speakers, never translated.</p></div>
+      <div class="card"><div class="icon icon-saffron">3</div><h4>Icon + text label always</h4><p>Bare icons fail with low-literacy users. Every tap target gets a Hindi label. No exceptions.</p></div>
+      <div class="card"><div class="icon icon-saffron">4</div><h4>56dp minimum touch targets</h4><p>Material says 48dp, Apple 44pt. For greasy thumbs in poor light during customer rush, we go 56-64dp minimum for primary actions.</p></div>
+      <div class="card"><div class="icon icon-saffron">5</div><h4>WhatsApp is the UX vocabulary</h4><p>Double-ticks = synced. Voice-note waveform = voice input. Status circles. Forward arrows. Reuse what they already know.</p></div>
+      <div class="card"><div class="icon icon-saffron">6</div><h4>Photo + OCR + voice &gt; typing</h4><p>Typing Hindi on a ₹10K phone is brutal. Default to camera, voice, and barcode. Typing is the last resort.</p></div>
+      <div class="card"><div class="icon icon-saffron">7</div><h4>Quiet trust over loud marketing</h4><p>CRED proved calm = trustworthy for money apps. Saffron as accent, not flood. Deep whitespace, restrained motion.</p></div>
+      <div class="card"><div class="icon icon-saffron">8</div><h4>Color + icon + label for status</h4><p>Red/green colorblindness is common. Always pair color with arrow (▲▼), label (Munafa/Nuksaan), and absolute number.</p></div>
+      <div class="card"><div class="icon icon-saffron">9</div><h4>One primary action per screen</h4><p>Decision overload is fatal at 10th-pass literacy. One big saffron CTA at bottom, one optional secondary action.</p></div>
+      <div class="card"><div class="icon icon-saffron">10</div><h4>Bottom sheets, never modal hell</h4><p>Sheets feel like drawers. Preserve context behind them. ChatGPT, GPay, PhonePe all use them as default disclosure.</p></div>
+      <div class="card"><div class="icon icon-saffron">11</div><h4>Offline-first is non-negotiable</h4><p>2G/3G dead zones, broken WiFi, exhausted prepaid are normal. 100% functional offline, sync silently in background.</p></div>
+      <div class="card"><div class="icon icon-saffron">12</div><h4>AI as invisible layer, not chat</h4><p>AI responses render as generative UI cards — a chart, an action button, a profit summary. Never a wall of text.</p></div>
+      <div class="card"><div class="icon icon-saffron">13</div><h4>Multi-sense confirmation</h4><p>Every money action = visual check + haptic success + Hindi voice "ho gaya, badhiya!" + sound chime.</p></div>
+      <div class="card"><div class="icon icon-saffron">14</div><h4>Zerodha-grade number density</h4><p>Monospaced numerals, right-aligned rupees, color-coded, generous whitespace around digits. Never let numbers collide.</p></div>
+      <div class="card"><div class="icon icon-saffron">15</div><h4>Onboarding via dukan, not forms</h4><p>Paytm loses users at OTP/KYC. Badhiya onboards with a single voice prompt → photo → done. KYC happens lazily.</p></div>
+    </div>
+
+    <!-- COLOR PALETTE -->
+    <h3>Color System</h3>
+    <p style="margin-bottom:24px;color:var(--ink-500)">WCAG AA verified. Warm-black (#1A1611), never pure black. Warm border (#F0E6D6), never gray. Hex values shown — all contrasts tested against warm-white #FFFBF5.</p>
+    <div class="grid grid-4" style="margin-bottom:40px">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#FF6B00"></div>
+        <div style="padding:16px"><h4>Saffron 500</h4><code style="color:var(--ink-500)">#FF6B00</code><p style="margin-top:8px">Primary CTA, active states, brand accent</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#1B8C3A"></div>
+        <div style="padding:16px"><h4>Profit Green</h4><code style="color:var(--ink-500)">#1B8C3A</code><p style="margin-top:8px">Gains, success, paid, streaks</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#C13030"></div>
+        <div style="padding:16px"><h4>Loss Red</h4><code style="color:var(--ink-500)">#C13030</code><p style="margin-top:8px">Losses, errors, overdue credit</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#E89B00"></div>
+        <div style="padding:16px"><h4>Warning Amber</h4><code style="color:var(--ink-500)">#E89B00</code><p style="margin-top:8px">Caution, low stock, aging khata</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#1A56DB"></div>
+        <div style="padding:16px"><h4>Trust Blue</h4><code style="color:var(--ink-500)">#1A56DB</code><p style="margin-top:8px">Financial features, links, trust signals</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#FFFBF5;border-bottom:1px solid var(--border)"></div>
+        <div style="padding:16px"><h4>Warm White BG</h4><code style="color:var(--ink-500)">#FFFBF5</code><p style="margin-top:8px">Main background — never cold #F8FAFC</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#FFFFFF;border-bottom:1px solid var(--border)"></div>
+        <div style="padding:16px"><h4>Surface</h4><code style="color:var(--ink-500)">#FFFFFF</code><p style="margin-top:8px">Elevated cards, 8dp shadow</p></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="height:100px;background:#1A1611"></div>
+        <div style="padding:16px"><h4>Warm Ink</h4><code style="color:var(--ink-500)">#1A1611</code><p style="margin-top:8px">Primary text — never pure #000</p></div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <h3>Typography</h3>
+    <div class="grid grid-2" style="margin-bottom:40px">
+      <div class="card">
+        <h4>Fonts</h4>
+        <p style="margin-bottom:12px"><strong>Hind</strong> (Google Fonts) — body, explicitly designed for UI, dual-script Devanagari + Latin, lightweight.</p>
+        <p style="margin-bottom:12px"><strong>Anek Devanagari</strong> — headlines, modern variable font, characterful.</p>
+        <p style="margin-bottom:12px"><strong>JetBrains Mono</strong> / IBM Plex Mono — tabular figures for rupee amounts. Eliminates jittering when numbers update.</p>
+        <p><strong>Fallback:</strong> Noto Sans Devanagari for missing glyphs.</p>
+      </div>
+      <div class="card">
+        <h4>Scale (scaled UP for low literacy, 1.25 ratio)</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:40px;font-weight:800">₹14,200</span><code style="color:var(--ink-500)">display · 40sp</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:28px;font-weight:700">Aaj ka Munafa</span><code style="color:var(--ink-500)">h1 · 28sp</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:22px;font-weight:600">Sharma General Store</span><code style="color:var(--ink-500)">h2 · 22sp</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px">Body text baseline</span><code style="color:var(--ink-500)">body · 18sp</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;color:var(--ink-500)">Caption metadata</span><code style="color:var(--ink-500)">caption · 14sp</code></div>
+        </div>
+        <p style="margin-top:16px;font-size:13px;color:var(--ink-400)">Body at 18sp (not the usual 14-16) accommodates 50+ year old readers. Line height 1.55 for Devanagari (taller than Latin's 1.4).</p>
+      </div>
+    </div>
+
+    <!-- HAPTICS -->
+    <h3>Haptics & Animation</h3>
+    <div class="grid grid-2" style="margin-bottom:40px">
+      <div class="card">
+        <h4>8 Haptic Patterns</h4>
+        <div class="table-wrap" style="border:none;box-shadow:none">
+          <table style="font-size:13px;min-width:0">
+            <tr><td><code>tap</code></td><td>Any button press</td><td>Impact Light</td></tr>
+            <tr><td><code>confirm</code></td><td>Successful save</td><td>Notification Success</td></tr>
+            <tr><td><code>error</code></td><td>Validation fail</td><td>Notification Error</td></tr>
+            <tr><td><code>select</code></td><td>Picker / chip</td><td>Selection</td></tr>
+            <tr><td><code>voiceStart</code></td><td>Mic held</td><td>Impact Medium</td></tr>
+            <tr><td><code>voiceEnd</code></td><td>Mic released</td><td>Impact Light</td></tr>
+            <tr><td><code>revealMoney</code></td><td>Profit unveiled</td><td>Impact Heavy</td></tr>
+            <tr><td><code>swipeDelete</code></td><td>Swipe-to-delete</td><td>Notification Warning</td></tr>
+          </table>
+        </div>
+        <p style="margin-top:12px;font-size:13px;color:var(--ink-400)">All haptics centralized through <code>services/haptics.ts</code>. Never called from components. User prefs: Off / Minimal / Full in Settings → Aawaz.</p>
+      </div>
+      <div class="card">
+        <h4>Animation Philosophy</h4>
+        <p style="margin-bottom:12px">Warm, never flashy. Saffron is already attention-grabbing; motion should feel like turning a ledger page, not a video game.</p>
+        <ul class="clean">
+          <li><strong>gentle</strong> (damping 20, stiffness 90) — screen entry, sheets</li>
+          <li><strong>snappy</strong> (damping 15, stiffness 200) — button feedback, tabs</li>
+          <li><strong>bounce</strong> (damping 8, stiffness 180) — ONLY for success, never errors</li>
+        </ul>
+        <p style="margin-top:12px;font-size:13px;color:var(--ink-500)"><strong>6 core animations:</strong> number tickers (Skia odometer), pulse orb (AI listening), voice waveform, page-turn (khata detail), checkmark reveal, saffron-tinted shimmer (never gray).</p>
+      </div>
+    </div>
+
+    <!-- OFFLINE ARCH -->
+    <h3>Offline-First Architecture</h3>
+    <div class="card" style="margin-bottom:40px">
+      <p style="margin-bottom:16px"><strong>Core principle:</strong> Local DB is the source of truth. Server is a sync target, not the master.</p>
+      <div class="grid grid-2">
+        <div>
+          <h4>Data Flow</h4>
+          <ol style="margin-left:20px;font-size:14px;color:var(--ink-700)">
+            <li>User action (voice → STT → form) writes to <strong>Drizzle + expo-sqlite</strong> immediately</li>
+            <li>Record marked <code>_status: "created"</code>, UI updates via Legend State observable</li>
+            <li>Haptic + sound + checkmark fires instantly (no network wait)</li>
+            <li><code>expo-background-task</code> runs sync every 15 min on WiFi/cellular</li>
+            <li>Pulls server changes since <code>lastSyncedAt</code>, pushes local dirty records</li>
+            <li>Conflicts resolved per field-level rules (never naive LWW)</li>
+          </ol>
+        </div>
+        <div>
+          <h4>Conflict Resolution</h4>
+          <ul class="clean">
+            <li><strong>Khata txns:</strong> append-only log → CRDT-friendly, no conflicts</li>
+            <li><strong>Customer details:</strong> field-level merge (name local + phone server both survive)</li>
+            <li><strong>Inventory counts:</strong> server authoritative + "confirm count?" UI</li>
+            <li><strong>Settings:</strong> device-local, never synced</li>
+          </ul>
+          <h4 style="margin-top:16px">Storage Budget (₹8K Android)</h4>
+          <ul class="clean">
+            <li>Drizzle + SQLite: ~200KB per 1k txns → 5 years kirana = ~50MB</li>
+            <li>MMKV cache: ~5MB</li>
+            <li>Voice notes: 50MB cap, auto-purge after sync</li>
+            <li>Photos: thumbnails local, originals server-side lazy load</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SCREENS ========== -->
+<section id="screens">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Screen Mockups</span>
+      <h2>Every screen, every flow</h2>
+      <p>22 screens covering onboarding, daily workflows, AI chat, commerce, finance, gamification, and settings. Every mockup is HTML/CSS — no screenshots. This is the blueprint the Expo app will implement.</p>
+    </div>
+
+    <div class="phone-gallery">
+
+      <!-- 01 SPLASH -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px">
+            <div class="splash-logo">B</div>
+            <h2 style="margin-top:28px;font-size:28px;color:var(--ink-900)">BADHIYA</h2>
+            <p style="font-family:'Hind';font-size:14px;color:var(--saffron-600);font-weight:600;margin-top:4px">बढ़िया</p>
+            <p style="font-size:13px;color:var(--ink-500);margin-top:18px;text-align:center">Business ho jayega badhiya!</p>
+            <div style="margin-top:auto;padding-top:40px">
+              <div style="width:40px;height:4px;background:var(--tricolor);border-radius:2px;margin:0 auto"></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:10px">Made for Bharat · 100% Indian</p>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>01 · Splash</h4><p>2s brand reveal, tricolor accent, preloads local DB and Legend State stores</p><span class="route">/_splash</span></div>
+      </div>
+
+      <!-- 02 VOICE ONBOARDING -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-body" style="padding-top:24px">
+            <p style="font-size:12px;color:var(--ink-400);font-weight:600">STEP 1 OF 3</p>
+            <h3 style="margin-top:6px;font-size:20px;color:var(--ink-900)">Apni dukan ka naam boliye</h3>
+            <p style="font-size:12px;color:var(--ink-500);margin-top:4px">Tell us your shop's name in Hindi or English</p>
+            <div class="voice-orb">🎤</div>
+            <p style="text-align:center;font-size:13px;color:var(--saffron-600);font-weight:600">Sun raha hoon...</p>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:20px">
+              <p style="font-family:'Hind';font-size:14px;color:var(--ink-900)">"मेरी दुकान का नाम शर्मा जनरल स्टोर है"</p>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:6px">Transcribing live via Bhashini...</p>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <span class="chip active">Kirana</span><span class="chip">Restaurant</span><span class="chip">Medical</span>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>02 · Voice Onboarding</h4><p>30-second onboarding. No forms, no OTP. Just speak. Bhashini + expo-speech-recognition hybrid</p><span class="route">/(auth)/onboarding</span></div>
+      </div>
+
+      <!-- 03 HOME / MORNING BRIEFING -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="screen-hero">
+            <p class="greet">Namaste · 7:00 AM</p>
+            <p class="name">Rajesh ji</p>
+            <p class="shop">Sharma General Store</p>
+          </div>
+          <div class="mic-fab">🎤</div>
+          <div class="phone-body">
+            <div class="kpi-bento">
+              <div class="kpi-tile saffron"><div class="lbl">Aaj ki Bikri</div><div class="val">₹11,800</div><div class="delta up">▲ 12%</div></div>
+              <div class="kpi-tile green"><div class="lbl">Munafa</div><div class="val">₹2,600</div><div class="delta up">▲ 8%</div></div>
+              <div class="kpi-tile"><div class="lbl">Udhaar Baaki</div><div class="val">₹1.52L</div><div class="delta down">12 grahak</div></div>
+              <div class="kpi-tile amber"><div class="lbl">Stock Alert</div><div class="val">3</div><div class="delta" style="color:var(--amber-500)">items kam</div></div>
+            </div>
+            <p class="section-label">Aaj ke Transactions</p>
+            <div class="txn-row"><div class="txn-avatar">A</div><div class="txn-info"><div class="txn-name">Amul Butter × 12</div><div class="txn-meta">9:14 AM · WhatsApp</div></div><div class="txn-amount pos">+₹720</div></div>
+            <div class="txn-row"><div class="txn-avatar" style="background:var(--green-50);color:var(--green-500)">R</div><div class="txn-info"><div class="txn-name">Ravi Sharma — paid</div><div class="txn-meta">8:52 AM · Khata</div></div><div class="txn-amount pos">+₹500</div></div>
+            <div class="txn-row"><div class="txn-avatar" style="background:var(--red-50);color:var(--red-500)">B</div><div class="txn-info"><div class="txn-name">Bijli bill</div><div class="txn-meta">7:30 AM · Expense</div></div><div class="txn-amount neg">−₹4,200</div></div>
+          </div>
+          <div class="ai-pill"><div class="orb"></div>Pucho Kuch Bhi — "kal kitna kamaya?"</div>
+          <div class="tab-bar">
+            <div class="tab-item active"><div class="tab-icon">🏠</div>Ghar</div>
+            <div class="tab-item"><div class="tab-icon">📒</div>Khata</div>
+            <div class="tab-item"><div class="tab-icon">🛒</div>Dukan</div>
+            <div class="tab-item"><div class="tab-icon">💰</div>Paisa</div>
+            <div class="tab-item"><div class="tab-icon">⚙️</div>More</div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>03 · Home · Morning Briefing</h4><p>Hero bento (4 KPIs) + recent txns + AI pill. 7 AM push notification from backend BullMQ cron</p><span class="route">/(tabs)/index</span></div>
+      </div>
+
+      <!-- 04 KHATA LIST -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Khata</div><div class="subtitle">12 customers · ₹1,52,400 pending</div></div><span style="font-size:20px">🔍</span></div>
+          <div class="phone-body">
+            <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto">
+              <span class="chip active">Sab · 12</span><span class="chip">Overdue · 3</span><span class="chip">Aaj</span><span class="chip">Paid</span>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--red-500)">A</div>
+              <div class="cust-info"><div class="cust-name">Anil Trading Co.</div><div class="cust-meta">Overdue · 72 din</div></div>
+              <div class="cust-amount"><div class="big">₹48,000</div><span class="badge badge-red">URGENT</span></div>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--amber-500)">R</div>
+              <div class="cust-info"><div class="cust-name">Ravi Sharma</div><div class="cust-meta">Last paid · 18 din</div></div>
+              <div class="cust-amount"><div class="big">₹2,800</div><span class="badge badge-amber">AGING</span></div>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--green-500)">M</div>
+              <div class="cust-info"><div class="cust-name">Meena Devi</div><div class="cust-meta">Last paid · 3 din</div></div>
+              <div class="cust-amount"><div class="big">₹1,200</div><span class="badge badge-green">OK</span></div>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--blue-500)">S</div>
+              <div class="cust-info"><div class="cust-name">Suresh Bhai</div><div class="cust-meta">Last paid · 1 din</div></div>
+              <div class="cust-amount"><div class="big">₹4,500</div><span class="badge badge-green">OK</span></div>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--saffron-500)">P</div>
+              <div class="cust-info"><div class="cust-name">Priya Enterprises</div><div class="cust-meta">Last paid · 25 din</div></div>
+              <div class="cust-amount"><div class="big">₹8,700</div><span class="badge badge-amber">AGING</span></div>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-item"><div class="tab-icon">🏠</div>Ghar</div>
+            <div class="tab-item active"><div class="tab-icon">📒</div>Khata</div>
+            <div class="tab-item"><div class="tab-icon">🛒</div>Dukan</div>
+            <div class="tab-item"><div class="tab-icon">💰</div>Paisa</div>
+            <div class="tab-item"><div class="tab-icon">⚙️</div>More</div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>04 · Khata List</h4><p>Digitized bahi-khata. Color + badge + days-aging. Swipe right = "WhatsApp pe yaad dilao"</p><span class="route">/(tabs)/khata</span></div>
+      </div>
+
+      <!-- 05 CUSTOMER DETAIL / LEDGER -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">← Ravi Sharma</div><div class="subtitle">Last paid · 18 days ago</div></div><span style="font-size:18px">📞</span></div>
+          <div class="phone-body">
+            <div style="background:linear-gradient(135deg,#FFF4D6,#FFECB3);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px">
+              <p style="font-size:11px;color:var(--amber-500);font-weight:700;text-transform:uppercase">Total Outstanding</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:800;color:var(--ink-900);margin-top:4px">₹2,800</p>
+              <p style="font-size:11px;color:var(--ink-500);margin-top:2px">4 entries · since 15 Feb 2026</p>
+            </div>
+            <p class="section-label">Ledger History</p>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid var(--red-500)">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:600">Atta 10kg + Dal 2kg</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--red-500)">+₹850</span></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:3px">18 Mar · Udhaar diya</p>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid var(--green-500)">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:600">Cash payment</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--green-500)">−₹1,000</span></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:3px">15 Mar · Paise mile</p>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;border-left:3px solid var(--red-500)">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:12px;font-weight:600">Oil + Sugar + Rice</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--red-500)">+₹2,200</span></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:3px">02 Mar · Udhaar diya</p>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:#fff;border-top:1px solid var(--border);display:flex;gap:8px">
+            <button class="cta-primary" style="flex:1;font-size:12px;padding:12px">📲 WhatsApp Remind</button>
+            <button class="cta-secondary" style="flex:1;margin-top:0;font-size:12px;padding:12px">+ Udhaar</button>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>05 · Customer Ledger</h4><p>Cream-colored, paper-ledger metaphor. Tap WhatsApp → pre-filled Hindi reminder opens wa.me link</p><span class="route">/khata/[id]</span></div>
+      </div>
+
+      <!-- 06 DUKAN / INVENTORY -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Meri Dukan</div><div class="subtitle">147 products · 3 low stock</div></div><span style="font-size:20px">📷</span></div>
+          <div class="phone-body">
+            <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto">
+              <span class="chip active">Sab</span><span class="chip">Kam Stock</span><span class="chip">Zyada Bika</span><span class="chip">Naya</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="product-card">
+                <div class="product-img">🧈</div>
+                <div class="product-name">Amul Butter 500g</div>
+                <div class="product-price">₹280</div>
+                <div class="product-stock">Stock: 12 ✓</div>
+              </div>
+              <div class="product-card">
+                <div class="product-img" style="background:linear-gradient(135deg,#FFF4D6,#FFECB3)">🌾</div>
+                <div class="product-name">Aashirvaad Atta 5kg</div>
+                <div class="product-price">₹280</div>
+                <div class="product-stock" style="color:var(--red-500);font-weight:700">Stock: 2 ⚠</div>
+              </div>
+              <div class="product-card">
+                <div class="product-img">🍜</div>
+                <div class="product-name">Maggi 4-pack</div>
+                <div class="product-price">₹48</div>
+                <div class="product-stock">Stock: 38 ✓</div>
+              </div>
+              <div class="product-card">
+                <div class="product-img" style="background:linear-gradient(135deg,#E5EDFB,#BFDBFE)">🥛</div>
+                <div class="product-name">Amul Milk 1L</div>
+                <div class="product-price">₹62</div>
+                <div class="product-stock">Stock: 22 ✓</div>
+              </div>
+              <div class="product-card">
+                <div class="product-img" style="background:linear-gradient(135deg,#D8F0DF,#A7F3D0)">🫘</div>
+                <div class="product-name">Toor Dal 1kg</div>
+                <div class="product-price">₹148</div>
+                <div class="product-stock" style="color:var(--amber-500);font-weight:700">Stock: 5</div>
+              </div>
+              <div class="product-card">
+                <div class="product-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">🍚</div>
+                <div class="product-name">Kolam Rice 5kg</div>
+                <div class="product-price">₹295</div>
+                <div class="product-stock">Stock: 15 ✓</div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-item"><div class="tab-icon">🏠</div>Ghar</div>
+            <div class="tab-item"><div class="tab-icon">📒</div>Khata</div>
+            <div class="tab-item active"><div class="tab-icon">🛒</div>Dukan</div>
+            <div class="tab-item"><div class="tab-icon">💰</div>Paisa</div>
+            <div class="tab-item"><div class="tab-icon">⚙️</div>More</div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>06 · Dukan / Inventory</h4><p>Photo-first grid (Meesho-inspired). Camera FAB → Vision Camera + ML Kit OCR auto-adds product</p><span class="route">/(tabs)/dukan</span></div>
+      </div>
+
+      <!-- 07 AI CHAT / PUCHO KUCH BHI -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Badhiya AI</div><div class="subtitle">Hindi · English · Hinglish</div></div>
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--gradient-saffron);box-shadow:0 0 0 4px rgba(255,107,0,.15);animation:pulse 2s infinite"></div>
+          </div>
+          <div class="phone-body">
+            <div class="ai-msg bot">
+              <p><strong>Namaste Rajesh ji!</strong> 🙏 Aaj kya janna hai?</p>
+            </div>
+            <div class="ai-msg user">
+              <p>kal kitna kamaya?</p>
+            </div>
+            <div class="ai-msg bot">
+              <p style="margin-bottom:8px"><strong>Kal ka hisaab:</strong></p>
+              <div style="background:var(--saffron-50);border-radius:10px;padding:10px;margin-bottom:6px">
+                <div style="display:flex;justify-content:space-between;font-size:11px"><span>Revenue</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700">₹14,200</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px"><span>Expenses</span><span style="font-family:'JetBrains Mono',monospace;font-weight:700">₹11,600</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:6px;padding-top:6px;border-top:1px solid #FFE9D9"><span style="font-weight:700">Munafa</span><span style="font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--green-500)">₹2,600</span></div>
+              </div>
+              <p style="font-size:11px;color:var(--ink-500)">12% up from day before! 4-day streak 🔥</p>
+            </div>
+            <div class="ai-msg user">
+              <p>PMEGP scheme batao</p>
+            </div>
+            <div class="ai-msg bot">
+              <p style="margin-bottom:6px">Aap <strong>PMEGP</strong> ke liye eligible ho:</p>
+              <div class="scheme-card" style="margin-bottom:6px">
+                <h5>PMEGP</h5>
+                <div class="amt">Up to ₹25 Lakh</div>
+                <p class="meta">25% subsidy · 5-7% interest</p>
+              </div>
+              <button class="cta-primary" style="padding:10px;font-size:11px">Apply Now →</button>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px">
+            <div style="flex:1;background:var(--bg);border-radius:20px;padding:10px 14px;font-size:12px;color:var(--ink-400)">Type or speak...</div>
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--gradient-saffron);display:grid;place-items:center;color:#fff;font-size:18px">🎤</div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>07 · AI Chat · Pucho Kuch Bhi</h4><p>Generative UI cards, not text walls. Connects to backend 7-layer AI pipeline. Voice-first, keyboard secondary</p><span class="route">/chat</span></div>
+      </div>
+
+      <!-- 08 VOICE INPUT SHEET -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header" style="opacity:.3"><div><div class="title">Ghar</div></div></div>
+          <div class="phone-body" style="opacity:.25"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top-left-radius:28px;border-top-right-radius:28px;padding:20px 20px 30px;box-shadow:0 -20px 60px rgba(0,0,0,.15);height:420px">
+            <div style="width:40px;height:4px;background:var(--border-strong);border-radius:2px;margin:0 auto 16px"></div>
+            <p style="text-align:center;font-size:11px;color:var(--ink-400);font-weight:600;text-transform:uppercase;letter-spacing:.08em">Sun raha hoon...</p>
+            <div class="voice-orb" style="margin:20px auto 16px">🎤</div>
+            <div style="background:var(--saffron-50);border-radius:14px;padding:14px;margin-bottom:12px">
+              <p style="font-family:'Hind';font-size:15px;color:var(--ink-900);text-align:center">"बेचा 5 किलो आटा 250 रुपये"</p>
+              <p style="font-size:10px;color:var(--saffron-600);margin-top:6px;text-align:center;font-weight:600">Confidence: 94% · Bhashini</p>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px">
+              <span class="chip active" style="font-size:10px">✓ Bikri</span>
+              <span class="chip" style="font-size:10px">Kharcha</span>
+              <span class="chip" style="font-size:10px">Udhaar</span>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="cta-secondary" style="margin:0;flex:1;padding:12px;font-size:12px">Cancel</button>
+              <button class="cta-primary" style="flex:1;padding:12px;font-size:12px">✓ Confirm</button>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>08 · Voice Input Sheet</h4><p>Summonable from anywhere. Skia-rendered waveform. Bhashini live transcription with confidence score</p><span class="route">global sheet</span></div>
+      </div>
+
+      <!-- 09 PAISA / ANALYTICS -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Paisa</div><div class="subtitle">This month · March 2026</div></div><span style="font-size:18px">📊</span></div>
+          <div class="phone-body">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <div><p style="font-size:10px;color:var(--ink-400);font-weight:600;text-transform:uppercase">Revenue</p><p style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800">₹2,84,000</p></div>
+                <div style="text-align:right"><p style="font-size:10px;color:var(--green-500);font-weight:700">▲ 8.3%</p><p style="font-size:10px;color:var(--ink-400)">vs Feb</p></div>
+              </div>
+              <!-- Chart mock -->
+              <svg viewBox="0 0 300 100" style="width:100%;height:90px">
+                <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#FF6B00" stop-opacity=".3"/><stop offset="100%" stop-color="#FF6B00" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,70 Q20,60 40,55 T80,45 T120,50 T160,35 T200,30 T240,20 T280,25 L300,25 L300,100 L0,100 Z" fill="url(#g1)"/>
+                <path d="M0,70 Q20,60 40,55 T80,45 T120,50 T160,35 T200,30 T240,20 T280,25" stroke="#FF6B00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <circle cx="280" cy="25" r="4" fill="#FF6B00"/>
+                <circle cx="280" cy="25" r="8" fill="#FF6B00" opacity=".2"/>
+              </svg>
+              <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:var(--ink-400)"><span>1 Mar</span><span>8</span><span>15</span><span>22</span><span>29</span></div>
+            </div>
+            <div class="kpi-bento">
+              <div class="kpi-tile saffron"><div class="lbl">Bikri</div><div class="val">₹2.84L</div></div>
+              <div class="kpi-tile" style="background:var(--red-50);border-color:transparent"><div class="lbl">Kharcha</div><div class="val" style="color:var(--red-500)">₹2.22L</div></div>
+              <div class="kpi-tile green"><div class="lbl">Munafa</div><div class="val">₹62,400</div></div>
+              <div class="kpi-tile"><div class="lbl">Margin</div><div class="val">22%</div></div>
+            </div>
+            <div class="ins-card">
+              <div class="ins-head"><div class="ins-dot"></div><div class="ins-title">AI Insight · Weekly</div></div>
+              <p class="ins-body">Mangalwar ko 34% zyada bikri hoti hai. Atta aur dal ka stock Tuesday se pehle badhao.</p>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-item"><div class="tab-icon">🏠</div>Ghar</div>
+            <div class="tab-item"><div class="tab-icon">📒</div>Khata</div>
+            <div class="tab-item"><div class="tab-icon">🛒</div>Dukan</div>
+            <div class="tab-item active"><div class="tab-icon">💰</div>Paisa</div>
+            <div class="tab-item"><div class="tab-icon">⚙️</div>More</div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>09 · Paisa · Analytics</h4><p>Victory Native XL (Skia) area chart. 4-tile bento. Weekly AI insights from backend pipeline</p><span class="route">/(tabs)/paisa</span></div>
+      </div>
+
+      <!-- 10 HEALTH SCORE -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">← Badhiya Score</div><div class="subtitle">Business Health · 0-900</div></div></div>
+          <div class="phone-body">
+            <div style="text-align:center;padding:14px 0">
+              <div class="gauge-ring">
+                <svg viewBox="0 0 160 160" style="width:100%;height:100%;transform:rotate(-90deg)">
+                  <circle cx="80" cy="80" r="68" stroke="#F0E6D6" stroke-width="14" fill="none"/>
+                  <circle cx="80" cy="80" r="68" stroke="url(#gaugeGrad)" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="427" stroke-dashoffset="152"/>
+                  <defs><linearGradient id="gaugeGrad" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#FF8C38"/><stop offset="100%" stop-color="#FF6B00"/></linearGradient></defs>
+                </svg>
+                <div class="gauge-center">
+                  <div class="gauge-num">644</div>
+                  <div class="gauge-lbl">GOLD · Badhiya Master</div>
+                </div>
+              </div>
+              <p style="font-size:11px;color:var(--green-500);font-weight:700;margin-top:10px">▲ 24 points this month</p>
+            </div>
+            <p class="section-label">6-Component Breakdown</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">📒 Bookkeeping</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:85%;background:var(--green-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">85</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">📈 Revenue</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:78%;background:var(--green-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">78</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">💳 Digital Pay</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:92%;background:var(--green-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">92</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">⚠ Credit</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:55%;background:var(--amber-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">55</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">📋 Compliance</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:68%;background:var(--saffron-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">68</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;width:90px">🔥 Engagement</span><div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden"><div style="height:100%;width:88%;background:var(--green-500);border-radius:4px"></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:32px;text-align:right">88</span></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>10 · Business Health Score</h4><p>Skia-rendered gauge. 6-component breakdown. Proprietary 0-900 score gates loan access</p><span class="route">/finance/health-score</span></div>
+      </div>
+
+      <!-- 11 LOAN MARKETPLACE -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Loan Marketplace</div><div class="subtitle">5 NBFC partners · instant quotes</div></div></div>
+          <div class="phone-body">
+            <div style="background:linear-gradient(135deg,#D8F0DF,#A7F3D0);border-radius:14px;padding:14px;margin-bottom:12px">
+              <p style="font-size:10px;color:var(--green-700);font-weight:700;text-transform:uppercase">Eligible at your score</p>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:var(--ink-900);margin-top:4px">Up to ₹2,50,000</p>
+              <p style="font-size:11px;color:var(--ink-700);margin-top:2px">Badhiya Score: 644 · Gold tier</p>
+            </div>
+            <p class="section-label">5 NBFCs bidding</p>
+            <div class="loan-card">
+              <div class="row"><div><div class="loan-name">Lendingkart</div><div class="loan-rate">1.2% / month · 12 mo</div></div><div style="text-align:right"><div class="loan-amt">₹2.5L</div><p style="font-size:9px;color:var(--green-500);font-weight:700">BEST RATE ✓</p></div></div>
+            </div>
+            <div class="loan-card">
+              <div class="row"><div><div class="loan-name">FlexiLoans</div><div class="loan-rate">1.4% / month · 15 mo</div></div><div style="text-align:right"><div class="loan-amt">₹2.0L</div></div></div>
+            </div>
+            <div class="loan-card">
+              <div class="row"><div><div class="loan-name">Kinara Capital</div><div class="loan-rate">1.5% / month · 18 mo</div></div><div style="text-align:right"><div class="loan-amt">₹1.8L</div></div></div>
+            </div>
+            <div class="loan-card">
+              <div class="row"><div><div class="loan-name">Capital Float</div><div class="loan-rate">1.6% / month · 12 mo</div></div><div style="text-align:right"><div class="loan-amt">₹1.5L</div></div></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:#fff;border-top:1px solid var(--border)">
+            <button class="cta-primary" style="font-size:13px">Apply to Lendingkart →</button>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>11 · NBFC Marketplace</h4><p>5 lenders bidding transparently. Gated by health score. Differentiates from single-lender BharatPe/PhonePe</p><span class="route">/finance/loans</span></div>
+      </div>
+
+      <!-- 12 GOVT SCHEMES -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Sarkari Yojana</div><div class="subtitle">7 schemes · you qualify</div></div></div>
+          <div class="phone-body">
+            <div style="display:flex;gap:6px;margin-bottom:10px">
+              <span class="chip active">All · 7</span><span class="chip">Loan · 3</span><span class="chip">Subsidy · 2</span>
+            </div>
+            <div class="scheme-card">
+              <p style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:.8">✓ Highest Match · 95%</p>
+              <h5 style="margin-top:4px">PMEGP</h5>
+              <p style="font-size:10px;opacity:.85;margin-top:2px">Prime Minister's Employment Generation Programme</p>
+              <div class="amt">₹25,00,000</div>
+              <p class="meta">25% subsidy · 5-7% interest · 3-7 year tenure</p>
+            </div>
+            <div class="scheme-card" style="background:linear-gradient(135deg,#1B8C3A,#2FB559)">
+              <p style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:.8">Match · 88%</p>
+              <h5 style="margin-top:4px">Mudra Kishore</h5>
+              <p style="font-size:10px;opacity:.85;margin-top:2px">Pradhan Mantri Mudra Yojana</p>
+              <div class="amt">₹5,00,000</div>
+              <p class="meta">No collateral · 10.5% · quick approval</p>
+            </div>
+            <div class="scheme-card" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">
+              <p style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:.8">Match · 82%</p>
+              <h5 style="margin-top:4px">CGTMSE</h5>
+              <p style="font-size:10px;opacity:.85;margin-top:2px">Credit Guarantee Scheme</p>
+              <div class="amt">₹2 Cr</div>
+              <p class="meta">Collateral-free · up to 75% guarantee</p>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:#fff;border-top:1px solid var(--border)">
+            <button class="cta-primary" style="font-size:13px">1-Tap Apply · PMEGP</button>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>12 · Govt Scheme Matcher</h4><p>100+ schemes matched against Udyam profile. CRAG retrieval from backend. 1-tap apply flow</p><span class="route">/finance/schemes</span></div>
+      </div>
+
+      <!-- 13 ONDC -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">ONDC</div><div class="subtitle">Bharat's open commerce network</div></div></div>
+          <div class="phone-body">
+            <div style="background:linear-gradient(135deg,#1B8C3A,#2FB559);color:#fff;border-radius:16px;padding:16px;margin-bottom:14px">
+              <p style="font-size:10px;font-weight:700;text-transform:uppercase;opacity:.85">Aap seller banne ke liye ready ho!</p>
+              <p style="font-size:18px;font-weight:800;margin-top:4px">147 products auto-listed</p>
+              <p style="font-size:11px;opacity:.85;margin-top:2px">Discoverable across 600+ cities, 100+ buyer apps</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+              <div class="kpi-tile"><div class="lbl">Orders</div><div class="val" style="font-size:16px">2</div><div class="delta up">Naye aaye</div></div>
+              <div class="kpi-tile"><div class="lbl">Rating</div><div class="val" style="font-size:16px">4.6 ★</div><div class="delta up">Top 15%</div></div>
+              <div class="kpi-tile"><div class="lbl">Views</div><div class="val" style="font-size:16px">234</div><div class="delta">Is hafte</div></div>
+              <div class="kpi-tile"><div class="lbl">Revenue</div><div class="val" style="font-size:16px">₹4,120</div><div class="delta up">ONDC only</div></div>
+            </div>
+            <p class="section-label">Naye orders · Action needed</p>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--saffron-500)">#</div>
+              <div class="cust-info"><div class="cust-name">Order #ONDC-8912</div><div class="cust-meta">Jaipur · Paytm app · 5 min ago</div></div>
+              <div class="cust-amount"><div class="big">₹580</div><span class="badge badge-amber">ACCEPT</span></div>
+            </div>
+            <div class="cust-card">
+              <div class="cust-avatar" style="background:var(--blue-500)">#</div>
+              <div class="cust-info"><div class="cust-name">Order #ONDC-8907</div><div class="cust-meta">Delhi · Magicpin · 12 min ago</div></div>
+              <div class="cust-amount"><div class="big">₹1,240</div><span class="badge badge-amber">ACCEPT</span></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:#fff;border-top:1px solid var(--border)">
+            <button class="cta-primary" style="font-size:13px">View All Orders</button>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>13 · ONDC Seller Dashboard</h4><p>2-tap seller onboarding. Voice-add product → auto-listed. Unique — nobody else has this UX simplified</p><span class="route">/ondc</span></div>
+      </div>
+
+      <!-- 14 REWARDS / STREAKS / GAMIFICATION -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Badhiya Rewards</div><div class="subtitle">Coins · Streaks · Badges</div></div></div>
+          <div class="phone-body">
+            <div style="background:linear-gradient(135deg,#F9A825,#FFC107);color:#fff;border-radius:18px;padding:18px;text-align:center;margin-bottom:14px">
+              <p style="font-size:11px;font-weight:700;text-transform:uppercase;opacity:.9">🔥 Streak</p>
+              <p style="font-size:36px;font-weight:800;font-family:'JetBrains Mono',monospace;margin-top:4px">47 din</p>
+              <p style="font-size:11px;opacity:.9;margin-top:2px">Record: 89 din · Keep going!</p>
+              <div style="display:flex;justify-content:space-between;margin-top:14px;padding:10px;background:rgba(255,255,255,.2);border-radius:12px">
+                <div><p style="font-size:9px;opacity:.8">Coins</p><p style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:800">2,840 🪙</p></div>
+                <div><p style="font-size:9px;opacity:.8">Level</p><p style="font-size:15px;font-weight:800">Gold</p></div>
+                <div><p style="font-size:9px;opacity:.8">Rank</p><p style="font-size:15px;font-weight:800">#14 in Noida</p></div>
+              </div>
+            </div>
+            <p class="section-label">Badges Unlocked · 8 of 24</p>
+            <div class="badge-row">
+              <div class="badge-coin">🏆</div>
+              <div class="badge-coin" style="background:linear-gradient(135deg,#1B8C3A,#2FB559)">💰</div>
+              <div class="badge-coin" style="background:linear-gradient(135deg,#1A56DB,#3B82F6)">📊</div>
+              <div class="badge-coin" style="background:linear-gradient(135deg,#FF6B00,#FF8C38)">🔥</div>
+              <div class="badge-coin locked">🔒</div>
+            </div>
+            <p class="section-label">Today's Challenges</p>
+            <div class="ins-card">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700">Record 5 sales today</span><span style="font-size:11px;color:var(--saffron-600);font-weight:700">+50 🪙</span></div>
+              <div style="height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden"><div style="height:100%;width:60%;background:var(--gradient-saffron)"></div></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:4px">3 of 5 done</p>
+            </div>
+            <div class="ins-card">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700">Collect 1 overdue payment</span><span style="font-size:11px;color:var(--saffron-600);font-weight:700">+100 🪙</span></div>
+              <div style="height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden"><div style="height:100%;width:0%;background:var(--gradient-saffron)"></div></div>
+              <p style="font-size:10px;color:var(--ink-400);margin-top:4px">0 of 1 done</p>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>14 · Rewards & Streaks</h4><p>Daily billing habit loop. City-level leaderboards. Badges unlock discounts and health score bumps</p><span class="route">/rewards</span></div>
+      </div>
+
+      <!-- 15 NOTIFICATIONS -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Notifications</div><div class="subtitle">5 new · mark all read</div></div></div>
+          <div class="phone-body">
+            <p class="section-label">Aaj</p>
+            <div style="background:#fff;border:1px solid var(--border);border-left:3px solid var(--saffron-500);border-radius:12px;padding:12px;margin-bottom:8px">
+              <div style="display:flex;gap:10px"><span style="font-size:18px">☀️</span><div style="flex:1"><p style="font-size:12px;font-weight:700">Morning Briefing · 7:00 AM</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">Kal ₹14,200 kamaye, 12% up from day before. Top item: Amul Butter (23 units).</p><p style="font-size:10px;color:var(--ink-400);margin-top:3px">2 hours ago · WhatsApp + Push</p></div></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:3px solid var(--red-500);border-radius:12px;padding:12px;margin-bottom:8px">
+              <div style="display:flex;gap:10px"><span style="font-size:18px">⚠️</span><div style="flex:1"><p style="font-size:12px;font-weight:700">Stock Alert</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">Aashirvaad Atta 5kg: sirf 2 pack bache. Abhi reorder karo.</p><p style="font-size:10px;color:var(--ink-400);margin-top:3px">8:00 AM · BullMQ cron</p></div></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:3px solid var(--amber-500);border-radius:12px;padding:12px;margin-bottom:8px">
+              <div style="display:flex;gap:10px"><span style="font-size:18px">💳</span><div style="flex:1"><p style="font-size:12px;font-weight:700">Credit Reminder · Anil Trading</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">₹48,000 overdue 72 din. WhatsApp reminder bhejun?</p><p style="font-size:10px;color:var(--ink-400);margin-top:3px">10:00 AM · Auto</p></div></div>
+            </div>
+            <p class="section-label" style="margin-top:12px">Kal</p>
+            <div style="background:#fff;border:1px solid var(--border);border-left:3px solid var(--green-500);border-radius:12px;padding:12px;margin-bottom:8px">
+              <div style="display:flex;gap:10px"><span style="font-size:18px">🎉</span><div style="flex:1"><p style="font-size:12px;font-weight:700">Milestone!</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">₹10 lakh lifetime revenue cross kar liya. Badge unlocked: Lakhpati 🏆</p><p style="font-size:10px;color:var(--ink-400);margin-top:3px">Yesterday · Achievement</p></div></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-left:3px solid var(--blue-500);border-radius:12px;padding:12px">
+              <div style="display:flex;gap:10px"><span style="font-size:18px">🏛️</span><div style="flex:1"><p style="font-size:12px;font-weight:700">New Scheme Match</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">Mudra Tarun launched — ₹5-10L available. You qualify!</p></div></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>15 · Notifications</h4><p>3 BullMQ crons: morning briefing (7am), stock alert (8am), credit reminder (10am). Push + WhatsApp</p><span class="route">/notifications</span></div>
+      </div>
+
+      <!-- 16 SETTINGS -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">Settings</div><div class="subtitle">Rajesh · Sharma General Store</div></div></div>
+          <div class="phone-body">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+              <div style="width:52px;height:52px;border-radius:14px;background:var(--gradient-saffron);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700">R</div>
+              <div style="flex:1"><p style="font-size:14px;font-weight:700">Rajesh Sharma</p><p style="font-size:11px;color:var(--ink-500);margin-top:2px">+91 93197 88556</p><p style="font-size:10px;color:var(--saffron-600);font-weight:600;margin-top:2px">Gold · 644 Badhiya Score</p></div>
+              <span style="color:var(--ink-300);font-size:16px">›</span>
+            </div>
+            <p class="section-label">Shop</p>
+            <div class="setting-row"><div class="setting-icon">🏪</div><span class="setting-label">Dukan Profile</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon">📋</div><span class="setting-label">GST & Udyam</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon">👥</div><span class="setting-label">Team · 2 members</span><span class="setting-chev">›</span></div>
+            <p class="section-label" style="margin-top:16px">Preferences</p>
+            <div class="setting-row"><div class="setting-icon">🗣️</div><span class="setting-label">Bhasha · Hindi</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon">🔔</div><span class="setting-label">Notifications</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon">🎵</div><span class="setting-label">Aawaz & Haptics</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon">🔐</div><span class="setting-label">Biometric Lock · ON</span><span class="setting-chev">›</span></div>
+            <p class="section-label" style="margin-top:16px">Support</p>
+            <div class="setting-row"><div class="setting-icon">❓</div><span class="setting-label">Madad chahiye?</span><span class="setting-chev">›</span></div>
+            <div class="setting-row"><div class="setting-icon" style="background:var(--red-50);color:var(--red-500)">🚪</div><span class="setting-label" style="color:var(--red-500)">Logout</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>16 · Settings</h4><p>WhatsApp-style settings list. Each row opens a bottom sheet — never a new screen (avoids nav depth)</p><span class="route">/(tabs)/more</span></div>
+      </div>
+
+      <!-- 17 GST INVOICE -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">← Invoice #INV-2817</div><div class="subtitle">GST Compliant · 18 Mar 2026</div></div></div>
+          <div class="phone-body">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:10px">
+                <div><p style="font-size:10px;color:var(--ink-400);font-weight:600">FROM</p><p style="font-size:12px;font-weight:700;margin-top:2px">Sharma General Store</p><p style="font-size:10px;color:var(--ink-500)">GSTIN: 09ABCDE1234F1Z5</p></div>
+                <div style="text-align:right"><p style="font-size:10px;color:var(--ink-400);font-weight:600">TO</p><p style="font-size:12px;font-weight:700;margin-top:2px">Priya Enterprises</p><p style="font-size:10px;color:var(--ink-500)">GSTIN: 07PQRST5678G2Z9</p></div>
+              </div>
+              <div style="font-size:11px">
+                <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Aashirvaad Atta 5kg × 10</span><span class="mono">₹2,800</span></div>
+                <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Toor Dal 1kg × 5</span><span class="mono">₹740</span></div>
+                <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Sugar 1kg × 8</span><span class="mono">₹400</span></div>
+                <div style="border-top:1px dashed var(--border);margin-top:6px;padding-top:6px">
+                  <div style="display:flex;justify-content:space-between;padding:2px 0;color:var(--ink-500)"><span>Subtotal</span><span class="mono">₹3,940</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:2px 0;color:var(--ink-500)"><span>CGSTjob 2.5%</span><span class="mono">₹98.50</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:2px 0;color:var(--ink-500)"><span>SGST 2.5%</span><span class="mono">₹98.50</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:6px 0 2px;margin-top:4px;border-top:1px solid var(--border);font-weight:800;font-size:14px"><span>Total</span><span class="mono" style="color:var(--saffron-600)">₹4,137</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="background:var(--green-50);border:1px solid var(--green-500);border-radius:12px;padding:12px;margin-bottom:10px">
+              <p style="font-size:11px;font-weight:700;color:var(--green-700)">✓ GSTR-1 ready · Auto-filed on 11 Apr</p>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="cta-secondary" style="margin:0;flex:1;font-size:11px;padding:12px">📥 PDF</button>
+              <button class="cta-primary" style="flex:1.3;font-size:11px;padding:12px">📲 WhatsApp</button>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>17 · GST Invoice</h4><p>Auto-generated from voice input. GSTR-1/3B auto-filed. One-tap WhatsApp share via deep link</p><span class="route">/invoice/[id]</span></div>
+      </div>
+
+      <!-- 18 BILLING SHEET -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header" style="opacity:.3"><div><div class="title">Dukan</div></div></div>
+          <div class="phone-body" style="opacity:.2"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top-left-radius:28px;border-top-right-radius:28px;padding:22px 20px 20px;box-shadow:0 -24px 60px rgba(0,0,0,.15);height:480px">
+            <div style="width:40px;height:4px;background:var(--border-strong);border-radius:2px;margin:0 auto 16px"></div>
+            <h3 style="font-size:18px;margin-bottom:14px">Naya Bill Banao</h3>
+            <div style="margin-bottom:14px">
+              <p style="font-size:11px;font-weight:700;color:var(--ink-500);margin-bottom:6px">GRAHAK</p>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px;font-size:13px;font-weight:600">Priya Enterprises ▾</div>
+            </div>
+            <div style="margin-bottom:14px">
+              <p style="font-size:11px;font-weight:700;color:var(--ink-500);margin-bottom:6px">PRODUCTS</p>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;font-size:12px">
+                <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Atta 5kg × 10</span><span class="mono">₹2,800</span></div>
+                <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Dal 1kg × 5</span><span class="mono">₹740</span></div>
+                <div style="display:flex;justify-content:space-between;padding:3px 0"><span>Sugar 1kg × 8</span><span class="mono">₹400</span></div>
+              </div>
+            </div>
+            <div style="background:var(--saffron-50);border-radius:12px;padding:12px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-500)"><span>Subtotal</span><span class="mono">₹3,940</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-500);margin-top:2px"><span>GST 5%</span><span class="mono">₹197</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;margin-top:8px;padding-top:8px;border-top:1px solid #FFE9D9"><span>Total</span><span class="mono" style="color:var(--saffron-600)">₹4,137</span></div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="cta-secondary" style="margin:0;flex:1;padding:13px;font-size:12px">Cash</button>
+              <button class="cta-primary" style="flex:1.2;padding:13px;font-size:12px">UPI Pay</button>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>18 · Billing Sheet</h4><p>Voice-create a bill in 3 seconds. UPI intent deep link opens any UPI app. Auto-reconciles on payment</p><span class="route">global sheet</span></div>
+      </div>
+
+      <!-- 19 LANGUAGE PICKER -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div class="phone-header"><div><div class="title">← Bhasha</div><div class="subtitle">Choose your language</div></div></div>
+          <div class="phone-body">
+            <div style="background:#fff;border:1px solid var(--saffron-500);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--saffron-50);display:grid;place-items:center;font-size:18px">🇮🇳</div>
+              <div style="flex:1"><p style="font-family:'Hind';font-size:16px;font-weight:700">हिन्दी</p><p style="font-size:10px;color:var(--ink-500)">Hindi · 500M+ speakers · DEFAULT</p></div>
+              <span style="color:var(--saffron-500);font-size:18px">✓</span>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--bg);display:grid;place-items:center;font-size:18px">🇬🇧</div>
+              <div style="flex:1"><p style="font-size:15px;font-weight:700">English</p><p style="font-size:10px;color:var(--ink-500)">International</p></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--bg);display:grid;place-items:center;font-size:18px">🔀</div>
+              <div style="flex:1"><p style="font-size:15px;font-weight:700">Hinglish</p><p style="font-size:10px;color:var(--ink-500)">Code-switched · recommended</p></div>
+            </div>
+            <p class="section-label">More Indian Languages</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-family:'Hind';font-size:13px;font-weight:600">मराठी</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Marathi</p></div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-size:13px;font-weight:600">தமிழ்</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Tamil</p></div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-size:13px;font-weight:600">తెలుగు</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Telugu</p></div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-family:'Hind';font-size:13px;font-weight:600">ગુજરાતી</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Gujarati</p></div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-size:13px;font-weight:600">ಕನ್ನಡ</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Kannada</p></div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center"><p style="font-size:13px;font-weight:600">বাংলা</p><p style="font-size:9px;color:var(--ink-400);margin-top:2px">Bengali</p></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>19 · Language Picker</h4><p>11+ languages via i18next. Hinglish code-switched is the recommended default for tier 2/3</p><span class="route">/settings/language</span></div>
+      </div>
+
+      <!-- 20 BIOMETRIC LOCK -->
+      <div class="phone-wrap">
+        <div class="phone"><div class="phone-screen">
+          <div class="status-bar"><span>9:41</span><span>●●● ◯ ▮</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;background:var(--gradient-warm)">
+            <div class="splash-logo" style="width:80px;height:80px;font-size:36px;border-radius:20px;margin-bottom:20px">B</div>
+            <h3 style="font-size:20px;text-align:center">Badhiya mein swagat hai</h3>
+            <p style="font-size:13px;color:var(--ink-500);text-align:center;margin-top:6px">Fingerprint lagao ya PIN dalo</p>
+            <div style="width:120px;height:120px;border-radius:50%;border:3px dashed var(--saffron-500);display:grid;place-items:center;font-size:48px;margin:30px 0;background:#fff">👆</div>
+            <p style="font-size:11px;color:var(--saffron-600);font-weight:600">Touch the sensor</p>
+            <div style="margin-top:auto;padding-top:20px;width:100%">
+              <button class="cta-secondary" style="font-size:12px;padding:12px">Use PIN Instead</button>
+              <p style="text-align:center;font-size:10px;color:var(--ink-400);margin-top:14px">🔒 Offline · Local · Private</p>
+            </div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><h4>20 · Biometric Lock</h4><p>expo-local-authentication. Secure Keystore. PIN fallback. Triggered on app open after 10 min idle</p><span class="route">/lock</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== ROADMAP ========== -->
+<section id="roadmap">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-eyebrow">Roadmap</span>
+      <h2>10 phases · ship in logical order</h2>
+      <p>Backend is production-ready. Frontend web dashboard is built. This plan ships the mobile app (Channel 2) on a phased roadmap — de-risk the unknowns first (voice, offline sync, native builds) before feature-building. Each phase is a closable milestone with its own Maestro test suite and internal demo.</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="milestone done">
+        <div class="milestone-phase">Phase 0 · Complete</div>
+        <h4>Baseline research & planning ✓</h4>
+        <p>Three research agents dispatched (competitors, UX, advanced stack). 5,694 lines of existing docs reviewed. CourtNetra stack analyzed. This HTML plan committed.</p>
+      </div>
+
+      <div class="milestone now">
+        <div class="milestone-phase">Phase 1 · Sprint 1 (current)</div>
+        <h4>Scaffold + risk de-risking</h4>
+        <p>Bootstrap Expo SDK 55 app. Wire the riskiest unknowns first so surprises happen early when they're cheap.</p>
+        <ul>
+          <li><code>npx create-expo-app</code> with New Arch + Hermes V1 opt-in, SDK 55 pinned</li>
+          <li>Drizzle + expo-sqlite + Legend State signed off on a throwaway "hello khata" flow</li>
+          <li>expo-audio + Bhashini hybrid STT proof — record a Hindi sentence, get text back, end-to-end</li>
+          <li>EAS Build staging channel, first OTA push tested</li>
+          <li>Maestro installed, first flow "app opens without crashing on ₹8K Redmi"</li>
+          <li>Sentry + PostHog wired with PII masking</li>
+          <li>Cold boot on real Redmi A-series &lt;2.5s or fix before any feature work</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 2 · Sprint 2</div>
+        <h4>Design system + navigation shell</h4>
+        <p>Theme tokens, typography, the 5-tab shell, bottom sheets, and one fully-polished Home screen as the pattern everyone else follows.</p>
+        <ul>
+          <li>Colors, Spacing, Radius, FontSize tokens (from design system above)</li>
+          <li>Hind + Anek Devanagari + JetBrains Mono font loading</li>
+          <li>expo-router 6 layout — <code>(auth)</code> and <code>(tabs)</code> groups</li>
+          <li>HapticsService centralized — 8 patterns</li>
+          <li>6 core animations (Reanimated 4): ticker, orb, waveform, page-turn, checkmark, shimmer</li>
+          <li>Reusable primitives: KpiTile, TxnRow, BottomSheet, PrimaryCTA, ChipRow, LoadingSkeleton</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 3 · Sprint 3</div>
+        <h4>Auth + onboarding flow</h4>
+        <p>Voice-first onboarding. Connect to existing backend <code>POST /auth/otp/send</code> and <code>/auth/otp/verify</code>. Biometric lock.</p>
+        <ul>
+          <li>Splash + brand reveal</li>
+          <li>Phone + OTP screen (10-digit validation, +91 prefix, auto-OTP from SMS)</li>
+          <li>Voice onboarding wizard — 3 steps (shop name, category, location)</li>
+          <li>JWT + refresh token stored in expo-secure-store</li>
+          <li>Legend State auth store persisted in MMKV</li>
+          <li>Biometric gate on app open after 10 min idle</li>
+          <li>Maestro suite: full onboarding happy path</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 4 · Sprint 4</div>
+        <h4>Home + Transactions</h4>
+        <p>Morning briefing dashboard. Voice-record a sale end-to-end with optimistic UI. Wire offline-first sync.</p>
+        <ul>
+          <li>Home screen: KPI bento + txn list + AI pill</li>
+          <li>Voice input sheet (global, summonable)</li>
+          <li>Sale/expense bottom sheet with Zod-validated form</li>
+          <li>Backend <code>POST /transactions</code> + <code>GET /pnl/today</code> wired via TanStack Query</li>
+          <li>Drizzle schema + migrations for transactions table</li>
+          <li>Legend State <code>syncedFetch</code> for offline mutation queue</li>
+          <li>Maestro: "record a sale offline, kill app, reopen, verify synced"</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 5 · Sprint 5</div>
+        <h4>Khata (credit ledger)</h4>
+        <p>The killer feature for kirana shopkeepers. Digitized bahi-khata with swipe-to-remind via WhatsApp deep links.</p>
+        <ul>
+          <li>Customer list with color-coded aging</li>
+          <li>Customer detail ledger (paper metaphor)</li>
+          <li>Give credit / record payment sheets</li>
+          <li>WhatsApp reminder deep link via <code>wa.me</code> with pre-filled Hindi template</li>
+          <li>Bulk reminder via backend <code>POST /credit/remind/all</code></li>
+          <li>Overdue calculation on-device (fast)</li>
+          <li>Maestro: "create customer, give credit, send reminder"</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 6 · Sprint 6</div>
+        <h4>Inventory (Dukan)</h4>
+        <p>Photo-first product grid. Vision Camera + ML Kit OCR for receipt scanning. Low-stock alerts.</p>
+        <ul>
+          <li>Product grid with filter chips</li>
+          <li>Add product via camera → OCR → voice confirm price</li>
+          <li>Stock update bottom sheet</li>
+          <li>Low-stock alert integration with backend BullMQ</li>
+          <li>Barcode scanning via Vision Camera frame processors</li>
+          <li>Maestro: "scan a product box, extract name + price, save"</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 7 · Sprint 7</div>
+        <h4>AI Chat · Pucho Kuch Bhi</h4>
+        <p>Generative UI responses connected to the 7-layer backend pipeline. Voice in, voice out, rendered as cards.</p>
+        <ul>
+          <li>Chat UI with pulsing orb animation (Skia)</li>
+          <li>Generative response renderer — routes to card components based on intent</li>
+          <li>Backend <code>POST /ai/query</code> wired (already built)</li>
+          <li>TTS via expo-speech with Hindi voice</li>
+          <li>Suggestion chips that auto-submit</li>
+          <li>Offline: queues queries, fires when connectivity returns</li>
+          <li>Maestro: "ask P&L, verify card renders, tap apply loan"</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 8 · Sprint 8</div>
+        <h4>Paisa · Health Score · Finance Hub</h4>
+        <p>Victory Native XL charts. Skia gauge. Loan marketplace + scheme matcher from backend.</p>
+        <ul>
+          <li>Revenue area chart with gesture scrubbing</li>
+          <li>Skia-rendered 0-900 health score gauge</li>
+          <li>6-component breakdown with animated bars</li>
+          <li>NBFC loan marketplace cards (5 lenders)</li>
+          <li>Govt scheme cards with 1-tap apply flow</li>
+          <li>Backend <code>/health-score/breakdown</code>, <code>/schemes</code>, <code>/loans</code> wired</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 9 · Sprint 9</div>
+        <h4>ONDC + GST Invoicing</h4>
+        <p>Seller dashboard for ONDC. GST invoice generation with GSTR-1/3B auto-filing. WhatsApp share.</p>
+        <ul>
+          <li>ONDC seller onboarding (backend already has the module)</li>
+          <li>Order acceptance flow with notification</li>
+          <li>GST invoice template rendering</li>
+          <li>PDF export via expo-print</li>
+          <li>WhatsApp deep link share with PDF attached</li>
+          <li>GSTR filing history screen</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 10 · Sprint 10</div>
+        <h4>Gamification + Notifications + Polish</h4>
+        <p>Streaks, badges, leaderboards. Daily push notifications via expo-background-task + FCM v1. Final polish.</p>
+        <ul>
+          <li>Rewards screen with streak tracker + badges + city leaderboard</li>
+          <li>Notifications screen with 3 BullMQ-driven categories</li>
+          <li>expo-background-task for daily sync + briefing scheduling</li>
+          <li>Lottie success animations for milestones</li>
+          <li>i18next with en/hi message files (from existing frontend)</li>
+          <li>Play Store ASO: screenshots, description, Hindi metadata</li>
+          <li>Internal beta via EAS Update dev channel</li>
+          <li>Full Maestro regression suite</li>
+        </ul>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-phase">Phase 11 · Launch</div>
+        <h4>Closed beta → Play Store</h4>
+        <p>Ship to 100 shopkeepers in Noida first. Measure streak adherence, voice accuracy, crash-free rate. Iterate before public launch.</p>
+        <ul>
+          <li>100 seed users via direct outreach + WhatsApp</li>
+          <li>Sentry crash-free target: 99.5%+</li>
+          <li>PostHog funnels: onboard → first sale → first WhatsApp reminder → first AI query</li>
+          <li>Weekly cohort retention target: 40%+ W1, 25%+ W4</li>
+          <li>Play Store staged rollout: 5% → 25% → 100% over 3 weeks</li>
+          <li>iOS build via TestFlight (optional — Android is primary)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== NEXT STEPS ========== -->
+<section id="next">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-eyebrow">Next Steps</span>
+      <h2>What we do on Monday</h2>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="icon icon-saffron">1</div>
+        <h4>Scaffold the Expo project</h4>
+        <p>Create <code>BadhiyaAI/mobile-app/</code> with <code>npx create-expo-app@latest --template default</code>. SDK 55 exact version, New Arch on, Hermes V1 opt-in in <code>app.json</code>. pnpm workspace root so mobile shares types with backend Zod schemas.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-saffron">2</div>
+        <h4>De-risk voice + sync on day one</h4>
+        <p>Before any screen work: get expo-audio recording a Hindi sentence, sending to Bhashini, getting text back. Then prove Drizzle + Legend State syncedFetch round-trips a transaction offline → online. If either fails, we want to know today.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-saffron">3</div>
+        <h4>Real device testing from Phase 1</h4>
+        <p>Order (or dig out) a ₹8K Redmi A-series equivalent. Every Maestro test runs on this device before merging. If cold boot exceeds 2.5s, we optimize before adding screens — not after.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-saffron">4</div>
+        <h4>Fill the empty whatsapp-bot directory</h4>
+        <p>Parallel to mobile, the empty <code>BadhiyaAI/whatsapp-bot/</code> directory needs the Hono-on-Cloudflare-Workers edge worker that forwards webhooks to NestJS. This is Channel 1 (P0) and mobile is Channel 2 (P1) — they should ship together for maximum impact.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-green">5</div>
+        <h4>Hire or confirm the Hindi copywriter</h4>
+        <p>Every string in the app must be written by a Tier-3 native Hindi speaker, not translated. Meesho's "anivarya vs zaroori" lesson is the one we cannot re-learn. Budget for one freelance copywriter per language as we expand.</p>
+      </div>
+      <div class="card">
+        <div class="icon icon-green">6</div>
+        <h4>Lock in the Bhashini + NBFC partnerships</h4>
+        <p>Backend has the Bhashini client but we need API keys. NBFC marketplace needs at least 3 signed MoUs with Lendingkart / FlexiLoans / Kinara Capital / Capital Float before Phase 8 ships or it's demo-ware.</p>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:40px">
+      <strong>The closing bet:</strong> By shipping mobile + WhatsApp bot worker in parallel over the next 10 sprints on this exact stack, Badhiya can own the voice + WhatsApp-native + AI advisor + health score + NBFC marketplace intersection before Pilloo AI, SayBill, or Meta-MoMSME chatbot mature their second axis. The 12-month window is real — the research confirmed it. Time to build.
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="tricolor-bar"></div>
+  <h3>BADHIYA · बढ़िया</h3>
+  <p style="margin-bottom:6px">Business ho jayega badhiya!</p>
+  <p>Made for Bharat · By Aniruddh Atrey · <a href="https://aniruddhatrey.com" style="color:var(--saffron-400)">aniruddhatrey.com</a></p>
+  <p style="margin-top:18px;font-size:12px;opacity:.6">Plan v1.0 · April 2026 · Research-backed · Generated with 3 parallel Claude agents</p>
+</footer>
+
+</body>
+</html>

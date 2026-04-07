@@ -1,0 +1,13 @@
+# Badhiya Phase 3 — onboarding wizard flow via dev bypass.
+#
+# Uses the dev bypass to skip real auth, then verifies the onboarding
+# happens for users with no business. For a new user flow, we'd need
+# a dev endpoint to wipe the user's business.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- tapOn: "Dev Bypass → Dashboard"
+- assertVisible: "Sharma General Store"
+- takeScreenshot: 01-after-bypass

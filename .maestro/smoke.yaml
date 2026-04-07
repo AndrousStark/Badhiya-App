@@ -1,0 +1,46 @@
+# Badhiya Maestro smoke test — Sprint 1 Day 5
+#
+# Goal: prove the app launches, renders the login placeholder, the dev
+# bypass works, the tab shell appears, and the de-risk screens are reachable.
+#
+# Run: npm run test:e2e
+#
+# Prerequisites:
+#   - Android emulator or real device with the dev build installed
+#   - Maestro CLI installed: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    text: "BADHIYA"
+    timeout: 8000
+- assertVisible: "Business ho jayega badhiya!"
+- takeScreenshot: 01-login
+- tapOn: "Dev Bypass → Dashboard"
+- assertVisible:
+    text: "Sharma General Store"
+    timeout: 3000
+- takeScreenshot: 02-home
+- assertVisible: "Voice De-risk"
+- assertVisible: "Sync De-risk"
+- tapOn: "Voice De-risk"
+- assertVisible:
+    text: "Sprint 1 · Day 3"
+    timeout: 3000
+- takeScreenshot: 03-voice-screen
+- back
+- assertVisible: "Sync De-risk"
+- tapOn: "Sync De-risk"
+- assertVisible:
+    text: "Sprint 1 · Day 4"
+    timeout: 3000
+- takeScreenshot: 04-sync-screen
+- back
+- assertVisible: "Logout (back to login)"
+- tapOn: "Logout (back to login)"
+- assertVisible:
+    text: "BADHIYA"
+    timeout: 3000
+- takeScreenshot: 05-logout-round-trip

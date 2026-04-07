@@ -1,0 +1,40 @@
+# Badhiya offline sync round-trip — Sprint 1 Day 4 exit criterion.
+#
+# Manual-assisted flow:
+#   1. Put device in airplane mode before running
+#   2. Run this test to create 3 transactions offline
+#   3. Kill the app manually (swipe away)
+#   4. Reopen the app — verify all 3 still show "created"
+#   5. Turn airplane mode OFF
+#   6. Tap "Force Sync" — all 3 should flip to "synced"
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: false   # preserve local DB across runs
+- runFlow:
+    when:
+      visible: "BADHIYA"
+    commands:
+      - tapOn: "Dev Bypass → Dashboard"
+- tapOn: "Sync De-risk"
+- assertVisible: "Sprint 1 · Day 4"
+
+# Add 3 offline transactions
+- tapOn: "+ Add Transaction (offline)"
+- waitForAnimationToEnd
+- tapOn: "+ Add Transaction (offline)"
+- waitForAnimationToEnd
+- tapOn: "+ Add Transaction (offline)"
+- waitForAnimationToEnd
+- takeScreenshot: 01-three-offline
+
+# Attempt sync
+- tapOn:
+    id: "force-sync-button"
+    optional: true
+- runFlow:
+    commands:
+      - tapOn:
+          text: "Force Sync.*"
+- takeScreenshot: 02-sync-attempted

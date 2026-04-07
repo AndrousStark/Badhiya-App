@@ -1,0 +1,111 @@
+{
+  "common": {
+    "namaste": "Namaste",
+    "badhiya": "Badhiya",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "retry": "Retry",
+    "error": "Something went wrong",
+    "noInternet": "No internet connection",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search",
+    "edit": "Edit"
+  },
+  "tabs": {
+    "home": "Home",
+    "khata": "Khata",
+    "dukan": "Store",
+    "paisa": "Money",
+    "more": "More"
+  },
+  "home": {
+    "goodMorning": "Good morning",
+    "goodAfternoon": "Good afternoon",
+    "goodEvening": "Good evening",
+    "todaySales": "Today's sales",
+    "profit": "Profit",
+    "outstanding": "Outstanding credit",
+    "stockAlert": "Stock alert",
+    "askAnything": "Ask anything",
+    "recentTransactions": "Today's transactions",
+    "noTransactions": "No transactions yet today"
+  },
+  "auth": {
+    "enterPhone": "Enter your phone number",
+    "sendOtp": "Send OTP",
+    "enterOtp": "Enter OTP",
+    "verify": "Verify",
+    "resendOtp": "Didn't get OTP? Resend",
+    "resendIn": "Resend in {{seconds}}s",
+    "invalidOtp": "Invalid OTP, please try again",
+    "invalidPhone": "Invalid phone number",
+    "shopNameQuestion": "What's your shop name?",
+    "welcome": "Welcome to Badhiya",
+    "tagline": "Business ho jayega badhiya!"
+  },
+  "onboarding": {
+    "typeTitle": "What's your business?",
+    "typeSub": "Pick your business type",
+    "nameTitle": "What's your shop name?",
+    "nameSub": "As you tell your customers",
+    "locationTitle": "Which city?",
+    "locationSub": "So we can tailor advice to your area",
+    "complianceTitle": "GST or Udyam?",
+    "complianceSub": "Fill them if you have them, or skip",
+    "gstinPlaceholder": "GSTIN optional",
+    "udyamPlaceholder": "Udyam number optional",
+    "next": "Next",
+    "done": "Done · Go to dashboard",
+    "skip": "Skip"
+  },
+  "lock": {
+    "title": "Welcome back",
+    "subtitle": "Badhiya is locked — use fingerprint",
+    "tapHint": "Touch the sensor",
+    "retry": "Try again",
+    "failed": "Authentication failed"
+  },
+  "khata": {
+    "title": "Credit Book",
+    "noCustomers": "No customers yet",
+    "giveCredit": "Give credit",
+    "receivePayment": "Receive payment",
+    "sendReminder": "Remind via WhatsApp",
+    "overdue": "Overdue",
+    "aging": "Aging",
+    "paid": "Paid",
+    "urgent": "Urgent",
+    "totalOutstanding": "Total outstanding",
+    "daysAgo": "{{count}} days ago"
+  },
+  "dukan": {
+    "title": "My Store",
+    "addProduct": "Add product",
+    "scanProduct": "Scan barcode",
+    "lowStock": "Low stock",
+    "outOfStock": "Out of stock",
+    "products": "{{count}} products"
+  },
+  "paisa": {
+    "title": "Money",
+    "revenue": "Revenue",
+    "expenses": "Expenses",
+    "profitMargin": "Profit margin",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "healthScore": "Badhiya Score"
+  },
+  "voice": {
+    "listening": "Listening...",
+    "processing": "Understanding...",
+    "tryAgain": "Try again",
+    "tapToSpeak": "Tap to speak"
+  }
+}
