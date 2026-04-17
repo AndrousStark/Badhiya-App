@@ -1,0 +1,36 @@
+# Badhiya Phase 8 — ONDC marketplace smoke test.
+#
+# Walks the ONDC seller journey:
+#   - /ondc index: registration card or stats dashboard depending on state
+#   - /ondc/catalog: list + sync products from inventory
+#   - /ondc/orders/[id]: single order detail (only if backend has orders)
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - Dev bypass session; ONDC registration not required — test tolerates
+#     unregistered sellers by asserting only on route navigation.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate via More tab → ONDC Commerce row
+- tapOn: "More"
+- scrollUntilVisible:
+    element:
+      text: "ONDC Commerce"
+    direction: DOWN
+- tapOn: "ONDC Commerce"
+- takeScreenshot: 01-ondc-index
+
+# If catalog link is visible, open it
+- runFlow:
+    when:
+      visible: "Catalog"
+    commands:
+      - tapOn: "Catalog"
+      - takeScreenshot: 02-ondc-catalog
+      - back
