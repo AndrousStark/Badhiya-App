@@ -21,10 +21,11 @@ import {
   ScrollView,
   Pressable,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { Search, MessageCircle, Plus, Send } from 'lucide-react-native';
+import { Search, MessageCircle, Plus, Send, X } from 'lucide-react-native';
 
 import {
   Colors,
@@ -57,11 +58,13 @@ type Filter = 'all' | 'urgent' | 'aging' | 'ok';
 export default function KhataScreen() {
   const { format } = useCurrency();
   const [filter, setFilter] = useState<Filter>('all');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
   const customersQ = useCustomers();
   const summaryQ = useCreditSummary();
   const bulkRemindMut = useSendBulkReminders();
-  const { openGiveCredit, openSearch } = useSheets();
+  const { openGiveCredit } = useSheets();
 
   const customers = customersQ.data ?? [];
 
@@ -76,9 +79,24 @@ export default function KhataScreen() {
   }, [customers]);
 
   const filtered = useMemo(() => {
-    if (filter === 'all') return customers;
-    return customers.filter((c) => c.status === filter);
-  }, [customers, filter]);
+    const byStatus =
+      filter === 'all' ? customers : customers.filter((c) => c.status === filter);
+    const q = query.trim().toLowerCase();
+    if (!q) return byStatus;
+    return byStatus.filter((c) => {
+      const name = c.name.toLowerCase();
+      const phone = c.phone?.toLowerCase() ?? '';
+      return name.includes(q) || phone.includes(q);
+    });
+  }, [customers, filter, query]);
+
+  function toggleSearch() {
+    haptic('tap');
+    setSearchOpen((prev) => {
+      if (prev) setQuery('');
+      return !prev;
+    });
+  }
 
   async function handleRefresh() {
     haptic('tap');
@@ -88,12 +106,10 @@ export default function KhataScreen() {
   async function handleBulkRemind() {
     haptic('tap');
     try {
-      const result = await bulkRemindMut.mutateAsync();
-      console.log(
-        `Bulk reminded: ${result.sent} sent, ${result.failed} failed`,
-      );
-    } catch (err) {
-      console.warn('Bulk remind failed:', err);
+      await bulkRemindMut.mutateAsync();
+    } catch {
+      // haptic('error') already fired from the mutation's onError;
+      // the user sees no confirmation haptic and can retry.
     }
   }
 
@@ -113,16 +129,36 @@ export default function KhataScreen() {
             style={({ pressed }) => [
               styles.iconBtn,
               pressed && styles.iconBtnPressed,
+              searchOpen && styles.iconBtnActive,
             ]}
-            onPress={() => {
-              haptic('tap');
-              openSearch();
-            }}
-            accessibilityLabel="Search customers"
+            onPress={toggleSearch}
+            accessibilityLabel={searchOpen ? 'Close search' : 'Search customers'}
+            accessibilityState={{ expanded: searchOpen }}
+            testID="khata-search-toggle"
           >
-            <Search color={Colors.ink[700]} size={20} strokeWidth={2.2} />
+            {searchOpen ? (
+              <X color={Colors.ink[700]} size={20} strokeWidth={2.2} />
+            ) : (
+              <Search color={Colors.ink[700]} size={20} strokeWidth={2.2} />
+            )}
           </Pressable>
         </View>
+        {searchOpen ? (
+          <View style={styles.searchBar}>
+            <Search color={Colors.ink[400]} size={18} strokeWidth={2.2} />
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Naam ya number dhundo"
+              placeholderTextColor={Colors.ink[400]}
+              autoFocus
+              returnKeyType="search"
+              style={styles.searchInput}
+              accessibilityLabel="Search by name or phone"
+              testID="khata-search-input"
+            />
+          </View>
+        ) : null}
       </FadeInUp>
 
       <ScrollView
@@ -218,9 +254,11 @@ export default function KhataScreen() {
         ) : filtered.length === 0 ? (
           <View style={styles.empty}>
             <Text style={styles.emptyText}>
-              {filter === 'all'
-                ? 'Abhi koi customer nahi'
-                : 'Is filter mein koi nahi'}
+              {query.trim()
+                ? `"${query.trim()}" se koi customer match nahi hua`
+                : filter === 'all'
+                  ? 'Abhi koi customer nahi'
+                  : 'Is filter mein koi nahi'}
             </Text>
           </View>
         ) : (
@@ -380,6 +418,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   iconBtnPressed: { backgroundColor: Colors.saffron[50] },
+  iconBtnActive: { backgroundColor: Colors.saffron[100], borderColor: Colors.saffron[300] },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginHorizontal: Spacing.xl,
+    marginBottom: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm + 2,
+    backgroundColor: Colors.surface,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: Radius.md,
+  },
+  searchInput: {
+    flex: 1,
+    fontFamily: FontFamily.body,
+    fontSize: FontSize.caption,
+    color: Colors.ink[900],
+    padding: 0,
+  },
   scroll: { padding: Spacing.xl },
   summaryCard: {
     backgroundColor: Colors.surface,

@@ -73,18 +73,52 @@ export function useCustomerLedger(customerId: string | undefined) {
 }
 
 // ─── Writes ─────────────────────────────────────────────
+//
+// Both mutations do an optimistic update on the summary so the header
+// "Total Pending" reflects the new balance instantly. The customer
+// list and ledger are invalidated on success for an authoritative
+// refresh — we don't optimistically insert new customer rows because
+// the server assigns the id and aging bucket, which we'd only be
+// guessing at locally.
 export function useGiveCredit() {
   const queryClient = useQueryClient();
   const businessId = auth$.businessId.get();
 
-  return useMutation<CreditMutationResponse, Error, GiveCreditDto>({
+  return useMutation<
+    CreditMutationResponse,
+    Error,
+    GiveCreditDto,
+    { prevSummary: CreditSummary | undefined }
+  >({
     mutationFn: (dto) => giveCredit(businessId!, dto),
+    onMutate: async (dto) => {
+      if (!businessId) return { prevSummary: undefined };
+      await queryClient.cancelQueries({ queryKey: customerKeys.summary(businessId) });
+      const prev = queryClient.getQueryData<CreditSummary>(
+        customerKeys.summary(businessId),
+      );
+      if (prev) {
+        queryClient.setQueryData<CreditSummary>(
+          customerKeys.summary(businessId),
+          { ...prev, totalOutstanding: prev.totalOutstanding + dto.amount },
+        );
+      }
+      return { prevSummary: prev };
+    },
+    onError: (_err, _dto, ctx) => {
+      haptic('error');
+      if (businessId && ctx?.prevSummary) {
+        queryClient.setQueryData(
+          customerKeys.summary(businessId),
+          ctx.prevSummary,
+        );
+      }
+    },
     onSuccess: () => {
       haptic('confirm');
       queryClient.invalidateQueries({ queryKey: customerKeys.all });
       queryClient.invalidateQueries({ queryKey: businessKeys.all });
     },
-    onError: () => haptic('error'),
   });
 }
 
@@ -92,14 +126,42 @@ export function useReceivePayment(customerId: string) {
   const queryClient = useQueryClient();
   const businessId = auth$.businessId.get();
 
-  return useMutation<CreditMutationResponse, Error, ReceivePaymentDto>({
+  return useMutation<
+    CreditMutationResponse,
+    Error,
+    ReceivePaymentDto,
+    { prevSummary: CreditSummary | undefined }
+  >({
     mutationFn: (dto) => receivePayment(businessId!, customerId, dto),
+    onMutate: async (dto) => {
+      if (!businessId) return { prevSummary: undefined };
+      await queryClient.cancelQueries({ queryKey: customerKeys.summary(businessId) });
+      const prev = queryClient.getQueryData<CreditSummary>(
+        customerKeys.summary(businessId),
+      );
+      if (prev) {
+        const nextTotal = Math.max(0, prev.totalOutstanding - dto.amount);
+        queryClient.setQueryData<CreditSummary>(
+          customerKeys.summary(businessId),
+          { ...prev, totalOutstanding: nextTotal },
+        );
+      }
+      return { prevSummary: prev };
+    },
+    onError: (_err, _dto, ctx) => {
+      haptic('error');
+      if (businessId && ctx?.prevSummary) {
+        queryClient.setQueryData(
+          customerKeys.summary(businessId),
+          ctx.prevSummary,
+        );
+      }
+    },
     onSuccess: () => {
       haptic('revealMoney');
       queryClient.invalidateQueries({ queryKey: customerKeys.all });
       queryClient.invalidateQueries({ queryKey: businessKeys.all });
     },
-    onError: () => haptic('error'),
   });
 }
 

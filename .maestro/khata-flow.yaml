@@ -1,0 +1,44 @@
+# Badhiya Phase 5 — Khata (credit book) smoke test.
+#
+# Exercises the main Khata interactions via the dev-bypassed session:
+#   - Navigate to Khata tab
+#   - Toggle search, type a query, see filter feedback (or empty state)
+#   - Tap FAB to open Give Credit sheet
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - Seed data optional — the test tolerates an empty customer list.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate to Khata tab
+- tapOn: "Khata"
+- assertVisible: "Khata"
+- takeScreenshot: 01-khata-list
+
+# Toggle search, type a nonsense query, verify empty/match feedback
+- tapOn:
+    id: "khata-search-toggle"
+- tapOn:
+    id: "khata-search-input"
+- inputText: "zzzqqq"
+- takeScreenshot: 02-search-no-match
+- assertVisible: "match nahi hua"
+
+# Clear the search and close the search bar
+- tapOn:
+    id: "khata-search-toggle"
+
+# Tap FAB to open the Give Credit sheet
+- scrollUntilVisible:
+    element:
+      accessibilityLabel: "Give credit"
+    direction: DOWN
+- tapOn:
+    accessibilityLabel: "Give credit"
+- takeScreenshot: 03-give-credit-sheet
