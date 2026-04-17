@@ -10,7 +10,7 @@
  * labels, WhatsApp-style list rows, AiPill above the tab bar.
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -18,11 +18,12 @@ import {
   ScrollView,
   Pressable,
   RefreshControl,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { observer } from '@legendapp/state/react';
 import { router } from 'expo-router';
-import { Mic, Bell, Search, Bug, WifiOff } from 'lucide-react-native';
+import { Mic, Bell, Search, Bug, WifiOff, Plus } from 'lucide-react-native';
 import { useNotifications } from '../../src/features/notifications/hooks';
 
 import {
@@ -37,16 +38,20 @@ import {
 } from '../../src/theme';
 import { auth$ } from '../../src/stores/auth';
 import { haptic } from '../../src/lib/haptics';
-import { mockTransactions } from '../../src/lib/mock-data';
 import { useGreeting } from '../../src/hooks/useGreeting';
 import { useNetworkStatus } from '../../src/hooks/useNetworkStatus';
+import { useCurrency } from '../../src/hooks/useCurrency';
 import { FadeInUp } from '../../src/components/animations';
 import { KpiTile, TxnRow, AiPill } from '../../src/components/dashboard';
 import { SectionLabel } from '../../src/components/ui';
+import { RevenueAreaChart } from '../../src/components/charts';
 import { useSheets } from '../../src/components/sheets';
 import { useDashboard } from '../../src/features/businesses/hooks';
 import { useTransactions } from '../../src/features/transactions/hooks';
+import { useRevenueChart } from '../../src/features/analytics/hooks';
 import { syncStatus$, syncPendingTransactions } from '../../src/services/sync';
+
+type ChartRange = 7 | 30;
 
 export default observer(function HomeScreen() {
   const greet = useGreeting();
@@ -60,9 +65,16 @@ export default observer(function HomeScreen() {
   const notifCount = notifQ.data?.length ?? 0;
 
   // ─── Real backend data ──────────────────────────
+  const [chartRange, setChartRange] = useState<ChartRange>(7);
   const dashboardQ = useDashboard();
   const txnsQ = useTransactions({ limit: 6 });
+  const revenueChartQ = useRevenueChart(chartRange);
   const dash = dashboardQ.data;
+  const { width: screenWidth } = useWindowDimensions();
+  const chartWidth = Math.max(240, screenWidth - Spacing.xl * 4);
+  const { format } = useCurrency();
+  const revenuePoints = revenueChartQ.data ?? [];
+  const revenueTotal = revenuePoints.reduce((sum, p) => sum + p.revenue, 0);
 
   // ─── Auto-sync on network reconnect ─────────────
   const wasOffline = useRef(false);
@@ -98,7 +110,17 @@ export default observer(function HomeScreen() {
 
   async function handleRefresh() {
     haptic('tap');
-    await Promise.all([dashboardQ.refetch(), txnsQ.refetch()]);
+    await Promise.all([
+      dashboardQ.refetch(),
+      txnsQ.refetch(),
+      revenueChartQ.refetch(),
+    ]);
+  }
+
+  function handleRangeChange(next: ChartRange) {
+    if (next === chartRange) return;
+    haptic('tap');
+    setChartRange(next);
   }
 
   return (
@@ -223,8 +245,57 @@ export default observer(function HomeScreen() {
             </View>
           </FadeInUp>
 
+          {/* ─── Revenue chart ───────────────────────── */}
+          <FadeInUp delay={100}>
+            <SectionLabel label="Bikri ka trend" />
+            <View style={styles.chartCard}>
+              <View style={styles.chartHeader}>
+                <View>
+                  <Text style={styles.chartTotalLabel}>
+                    {chartRange === 7 ? '7 din' : '30 din'} ka total
+                  </Text>
+                  <Text style={styles.chartTotalValue}>{format(revenueTotal)}</Text>
+                </View>
+                <View style={styles.chartRangeRow}>
+                  {([7, 30] as ChartRange[]).map((r) => {
+                    const active = chartRange === r;
+                    return (
+                      <Pressable
+                        key={r}
+                        onPress={() => handleRangeChange(r)}
+                        style={[
+                          styles.chartRangeChip,
+                          active && styles.chartRangeChipActive,
+                        ]}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${r} day range`}
+                        accessibilityState={{ selected: active }}
+                        testID={`home-range-${r}`}
+                      >
+                        <Text
+                          style={[
+                            styles.chartRangeText,
+                            active && styles.chartRangeTextActive,
+                          ]}
+                        >
+                          {r}d
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              </View>
+              <RevenueAreaChart
+                data={revenuePoints}
+                width={chartWidth}
+                height={140}
+                loading={revenueChartQ.isLoading}
+              />
+            </View>
+          </FadeInUp>
+
           {/* ─── Recent transactions (real data) ─────── */}
-          <FadeInUp delay={120}>
+          <FadeInUp delay={140}>
             <SectionLabel
               label="Aaj ke Transactions"
               actionLabel="Sab dekho"
@@ -233,53 +304,68 @@ export default observer(function HomeScreen() {
                 router.push('/(tabs)/khata');
               }}
             />
-            <View style={styles.txnCard}>
-              {(txnsQ.data?.data ?? []).slice(0, 6).map((t) => (
-                <TxnRow
-                  key={t.id}
-                  name={t.item ?? t.customerName ?? 'Transaction'}
-                  meta={`${formatTime(t.createdAt)} · ${t.recordedVia}`}
-                  amount={t.amount}
-                  type={t.type}
-                  onPress={() => haptic('tap')}
-                />
-              ))}
-              {/* Empty state — show mock transactions if no real data yet */}
-              {!txnsQ.isLoading &&
-                (!txnsQ.data || txnsQ.data.data.length === 0) &&
-                mockTransactions.map((t) => (
+            {(txnsQ.data?.data ?? []).length > 0 ? (
+              <View style={styles.txnCard}>
+                {(txnsQ.data?.data ?? []).slice(0, 6).map((t) => (
                   <TxnRow
                     key={t.id}
-                    name={t.name}
-                    meta={t.meta}
+                    name={t.item ?? t.customerName ?? 'Transaction'}
+                    meta={`${formatTime(t.createdAt)} · ${t.recordedVia}`}
                     amount={t.amount}
                     type={t.type}
                     onPress={() => haptic('tap')}
                   />
                 ))}
-            </View>
+              </View>
+            ) : (
+              <Pressable
+                onPress={handleMicPress}
+                style={({ pressed }) => [
+                  styles.emptyCard,
+                  pressed && styles.emptyCardPressed,
+                ]}
+                accessibilityRole="button"
+                accessibilityLabel="Record first sale with voice"
+                testID="home-empty-record"
+              >
+                <View style={styles.emptyIcon}>
+                  <Plus color={Colors.saffron[500]} size={24} strokeWidth={2.6} />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.emptyTitle}>
+                    Aaj abhi koi transaction nahi
+                  </Text>
+                  <Text style={styles.emptyBody}>
+                    Mic dabao aur bolo — "becha paanch kilo atta do sau rupaye" —
+                    record ho jayega.
+                  </Text>
+                </View>
+              </Pressable>
+            )}
           </FadeInUp>
 
-          {/* ─── Sprint 1 debug links (temporary) ────── */}
-          <FadeInUp delay={180}>
-            <SectionLabel label="Sprint 1 De-risk" />
-            <Pressable
-              style={({ pressed }) => [styles.debugLink, pressed && styles.debugLinkPressed]}
-              onPress={() => router.push('/_debug/voice')}
-            >
-              <Bug color={Colors.saffron[500]} size={18} strokeWidth={2.4} />
-              <Text style={styles.debugText}>Voice round-trip test</Text>
-              <Text style={styles.debugArrow}>›</Text>
-            </Pressable>
-            <Pressable
-              style={({ pressed }) => [styles.debugLink, pressed && styles.debugLinkPressed]}
-              onPress={() => router.push('/_debug/sync')}
-            >
-              <Bug color={Colors.saffron[500]} size={18} strokeWidth={2.4} />
-              <Text style={styles.debugText}>Offline sync test</Text>
-              <Text style={styles.debugArrow}>›</Text>
-            </Pressable>
-          </FadeInUp>
+          {/* ─── Dev-only debug links ────────────────── */}
+          {__DEV__ ? (
+            <FadeInUp delay={180}>
+              <SectionLabel label="Sprint 1 De-risk" />
+              <Pressable
+                style={({ pressed }) => [styles.debugLink, pressed && styles.debugLinkPressed]}
+                onPress={() => router.push('/_debug/voice')}
+              >
+                <Bug color={Colors.saffron[500]} size={18} strokeWidth={2.4} />
+                <Text style={styles.debugText}>Voice round-trip test</Text>
+                <Text style={styles.debugArrow}>›</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [styles.debugLink, pressed && styles.debugLinkPressed]}
+                onPress={() => router.push('/_debug/sync')}
+              >
+                <Bug color={Colors.saffron[500]} size={18} strokeWidth={2.4} />
+                <Text style={styles.debugText}>Offline sync test</Text>
+                <Text style={styles.debugArrow}>›</Text>
+              </Pressable>
+            </FadeInUp>
+          ) : null}
 
           <View style={{ height: 110 }} />
         </ScrollView>
@@ -452,5 +538,94 @@ const styles = StyleSheet.create({
     fontSize: FontSize.micro,
     color: Colors.white,
     fontWeight: FontWeight.bold,
+  },
+  chartCard: {
+    backgroundColor: Colors.surface,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: Radius.xl,
+    padding: Spacing.lg,
+    marginBottom: Spacing.lg,
+    ...Shadow.sm,
+  },
+  chartHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: Spacing.md,
+  },
+  chartTotalLabel: {
+    fontFamily: FontFamily.bodyBold,
+    fontSize: 10,
+    fontWeight: FontWeight.bold,
+    color: Colors.ink[400],
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  chartTotalValue: {
+    fontFamily: FontFamily.monoBold,
+    fontSize: FontSize.h2,
+    fontWeight: FontWeight.heavy,
+    color: Colors.ink[900],
+    marginTop: 2,
+  },
+  chartRangeRow: {
+    flexDirection: 'row',
+    gap: Spacing.xs,
+    backgroundColor: Colors.bg,
+    borderRadius: Radius.pill,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  chartRangeChip: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: Radius.pill,
+    minWidth: 40,
+    alignItems: 'center',
+  },
+  chartRangeChipActive: { backgroundColor: Colors.saffron[500] },
+  chartRangeText: {
+    fontFamily: FontFamily.bodyBold,
+    fontSize: FontSize.micro,
+    fontWeight: FontWeight.bold,
+    color: Colors.ink[500],
+  },
+  chartRangeTextActive: { color: Colors.white },
+  emptyCard: {
+    flexDirection: 'row',
+    gap: Spacing.md,
+    alignItems: 'center',
+    backgroundColor: Colors.saffron[50],
+    borderWidth: 1.5,
+    borderColor: Colors.saffron[200],
+    borderStyle: 'dashed',
+    borderRadius: Radius.xl,
+    padding: Spacing.lg,
+  },
+  emptyCardPressed: { backgroundColor: Colors.saffron[100] },
+  emptyIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: Colors.saffron[300],
+  },
+  emptyTitle: {
+    fontFamily: FontFamily.bodyBold,
+    fontSize: FontSize.caption,
+    fontWeight: FontWeight.bold,
+    color: Colors.ink[900],
+  },
+  emptyBody: {
+    fontFamily: FontFamily.body,
+    fontSize: FontSize.micro,
+    color: Colors.ink[500],
+    marginTop: 2,
+    lineHeight: 18,
   },
 });
