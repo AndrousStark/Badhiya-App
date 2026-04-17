@@ -1,0 +1,58 @@
+# Badhiya Phase 6 — Dukan (inventory) smoke test.
+#
+# Verifies the main inventory interactions:
+#   - Navigate to Dukan tab
+#   - Open Add Product sheet, fill minimum fields, submit
+#   - Verify product appears in the list
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - Dev bypass produces a business without inventory — safe starting state.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate to Dukan tab
+- tapOn: "Dukan"
+- assertVisible: "Dukan"
+- takeScreenshot: 01-dukan-list
+
+# Open Add Product sheet via the + FAB
+- tapOn:
+    accessibilityLabel: "Add product manually"
+- assertVisible: "Naya saamaan"
+- takeScreenshot: 02-add-product-sheet
+
+# Fill the required fields
+- tapOn:
+    id: "add-product-name"
+- inputText: "Aashirvaad Atta 5kg"
+- tapOn:
+    id: "add-product-price"
+- inputText: "280"
+
+# Save via the secondary "Aur ek add karo" — keeps the sheet open for
+# a quick bulk-entry verification of the session feedback.
+- tapOn:
+    id: "add-product-save-another"
+- assertVisible: "add ho gaya"
+- takeScreenshot: 03-save-another-feedback
+
+# Add a second product and save + close
+- tapOn:
+    id: "add-product-name"
+- inputText: "Tata Salt 1kg"
+- tapOn:
+    id: "add-product-price"
+- inputText: "28"
+- tapOn:
+    id: "add-product-submit"
+- takeScreenshot: 04-after-save
+
+# Back on the list — the two new items should be visible
+- assertVisible: "Aashirvaad Atta 5kg"
+- assertVisible: "Tata Salt 1kg"

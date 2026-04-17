@@ -69,6 +69,8 @@ export function AddProductSheet({
   const [stock, setStock] = useState('');
   const [barcode, setBarcode] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [sessionCount, setSessionCount] = useState(0);
+  const [justSavedName, setJustSavedName] = useState<string | null>(null);
 
   const addMut = useAddProduct();
   const { openVoice } = useSheets();
@@ -99,6 +101,8 @@ export function AddProductSheet({
       setCostPrice('');
       setStock('');
       setError(null);
+      setSessionCount(0);
+      setJustSavedName(null);
     }
   }, [visible, initialBarcode, initialName]);
 
@@ -116,7 +120,7 @@ export function AddProductSheet({
     priceNum > 0 &&
     !addMut.isPending;
 
-  async function handleSubmit() {
+  async function handleSubmit(opts: { keepOpen?: boolean } = {}) {
     setError(null);
     const parsed = addProductSchema.safeParse({
       name: name.trim(),
@@ -132,7 +136,18 @@ export function AddProductSheet({
     }
     try {
       await addMut.mutateAsync(parsed.data);
-      onClose();
+      if (opts.keepOpen) {
+        // Keep category + cost + price as sensible defaults for the
+        // next item in a bulk-entry session. Clear only what almost
+        // always differs: name, stock qty, and the scanned barcode.
+        setJustSavedName(parsed.data.name);
+        setSessionCount((c) => c + 1);
+        setName('');
+        setBarcode('');
+        setStock('');
+      } else {
+        onClose();
+      }
     } catch (err) {
       setError((err as { message?: string }).message ?? 'Failed to save');
     }
@@ -147,6 +162,14 @@ export function AddProductSheet({
             ? `Barcode: ${initialBarcode} · Details bharo`
             : 'Product details bharo'}
         </Text>
+
+        {sessionCount > 0 && justSavedName ? (
+          <View style={styles.sessionPill} accessibilityLiveRegion="polite">
+            <Text style={styles.sessionPillText}>
+              ✓ "{justSavedName}" add ho gaya · {sessionCount} is session mein
+            </Text>
+          </View>
+        ) : null}
 
         {/* ─── Name + voice mic ─────────────────────── */}
         <Text style={styles.label}>Naam</Text>
@@ -276,7 +299,7 @@ export function AddProductSheet({
         <View style={styles.submitWrap}>
           <Button
             label="Save · Saamaan add karo"
-            onPress={handleSubmit}
+            onPress={() => handleSubmit()}
             size="hero"
             fullWidth
             loading={addMut.isPending}
@@ -284,6 +307,27 @@ export function AddProductSheet({
             hapticPattern="confirm"
             testID="add-product-submit"
           />
+          <Pressable
+            onPress={() => handleSubmit({ keepOpen: true })}
+            disabled={!canSubmit}
+            style={({ pressed }) => [
+              styles.addAnotherBtn,
+              !canSubmit && styles.addAnotherDisabled,
+              pressed && styles.addAnotherPressed,
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel="Save and add another product"
+            testID="add-product-save-another"
+          >
+            <Text
+              style={[
+                styles.addAnotherText,
+                !canSubmit && styles.addAnotherTextDisabled,
+              ]}
+            >
+              Save · Aur ek add karo
+            </Text>
+          </Pressable>
         </View>
       </ScrollView>
     </BottomSheet>
@@ -436,5 +480,40 @@ const styles = StyleSheet.create({
   submitWrap: {
     marginTop: Spacing.xl,
     marginBottom: Spacing.lg,
+  },
+  addAnotherBtn: {
+    marginTop: Spacing.md,
+    paddingVertical: Spacing.md,
+    borderRadius: Radius.lg,
+    borderWidth: 1.5,
+    borderColor: Colors.saffron[500],
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  addAnotherPressed: { backgroundColor: Colors.saffron[50] },
+  addAnotherDisabled: { borderColor: Colors.ink[300] },
+  addAnotherText: {
+    fontFamily: FontFamily.bodyBold,
+    fontSize: FontSize.caption,
+    fontWeight: FontWeight.bold,
+    color: Colors.saffron[600],
+  },
+  addAnotherTextDisabled: { color: Colors.ink[300] },
+  sessionPill: {
+    marginTop: Spacing.sm,
+    marginBottom: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    backgroundColor: Colors.profit[50],
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.profit[500],
+  },
+  sessionPillText: {
+    fontFamily: FontFamily.bodySemibold,
+    fontSize: FontSize.micro,
+    fontWeight: FontWeight.semibold,
+    color: Colors.profit[700],
   },
 });
