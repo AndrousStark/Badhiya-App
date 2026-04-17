@@ -1,0 +1,51 @@
+# Badhiya Phase 7 — Paisa (finance) smoke test.
+#
+# Walks the finance hub and each of its detail routes:
+#   - Paisa tab with revenue chart + KPIs + hub cards
+#   - Health Score detail screen (gauge + 6-component breakdown)
+#   - Loans marketplace (eligibility + offers)
+#   - Schemes (govt scheme matches)
+#   - Monthly Report
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - A business exists for the dev-bypass user (default).
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate to Paisa tab
+- tapOn: "Paisa"
+- assertVisible: "Paisa"
+- takeScreenshot: 01-paisa-hub
+
+# Switch the revenue chart range to 7 days
+- tapOn: "7"
+- takeScreenshot: 02-paisa-7d
+
+# Open Health Score detail via the hub card
+- tapOn: "Health Score"
+- takeScreenshot: 03-health-score
+- back
+
+# Open Loans detail
+- tapOn: "Loans"
+- takeScreenshot: 04-loans
+- back
+
+# Open Schemes detail
+- tapOn: "Schemes"
+- takeScreenshot: 05-schemes
+- back
+
+# Open Monthly Report
+- scrollUntilVisible:
+    element:
+      text: "Monthly Report"
+    direction: DOWN
+- tapOn: "Monthly Report"
+- takeScreenshot: 06-monthly-report
