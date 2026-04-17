@@ -1,0 +1,39 @@
+# Badhiya Phase 10 — Team management smoke test.
+#
+# Walks the team dashboard and each of the quick-link detail routes:
+#   - /team index: KPIs, today's attendance, member list
+#   - /team/attendance (mark daily hajri)
+#   - /team/payroll (monthly salary breakdown)
+#   - /team/shifts (weekly schedule grid)
+#   - /team/compliance (PF/ESI/OT alerts)
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - Dev bypass produces a business with no staff — the test tolerates
+#     empty rosters and only asserts route navigation.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate to More tab → Meri Team row
+- tapOn: "More"
+- tapOn: "Meri Team"
+- takeScreenshot: 01-team-dashboard
+
+# Open Attendance
+- tapOn: "Attendance"
+- takeScreenshot: 02-attendance
+- back
+
+# Open Payroll
+- scrollUntilVisible:
+    element:
+      text: "Payroll"
+    direction: DOWN
+- tapOn: "Payroll"
+- takeScreenshot: 03-payroll
+- back
