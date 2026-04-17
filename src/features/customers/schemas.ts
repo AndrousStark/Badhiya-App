@@ -52,7 +52,10 @@ export const customerSchema = z
     id: row.id,
     name: row.name,
     phone: row.phone ?? null,
-    initial: (row.name?.charAt(0) ?? '?').toUpperCase(),
+    // `??` alone doesn't catch empty strings (only null/undefined),
+    // so a blank name would render an empty avatar tile. Use `||`
+    // so empty-string names fall back to the "?" placeholder.
+    initial: (row.name?.charAt(0) || '?').toUpperCase(),
     totalOutstanding: row.total_outstanding,
     status: mapStatus(row.status),
     lastPaymentAt: row.last_payment_at ?? null,
