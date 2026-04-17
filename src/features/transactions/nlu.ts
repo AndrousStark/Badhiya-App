@@ -79,6 +79,15 @@ function buildKeywordRegex(words: string[]): RegExp {
   return new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi');
 }
 
+/**
+ * Word-bounded containment check. Prevents "pay" from falsely matching
+ * inside "rupaye" and similar substring collisions across our keyword
+ * lists.
+ */
+function containsKeyword(text: string, words: string[]): boolean {
+  return buildKeywordRegex(words).test(text);
+}
+
 const allTypeKeywordsRegex = buildKeywordRegex([
   ...SALE_KEYWORDS,
   ...EXPENSE_KEYWORDS,
@@ -118,13 +127,18 @@ export function parseTransaction(text: string): ParsedTransaction {
   let typeScore = 0;
 
   // Order matters: payment is the most specific (look for "X mile" / "received")
-  if (PAYMENT_KEYWORDS.some((k) => normalized.includes(k))) {
+  //
+  // We match keywords on **word boundaries** rather than plain substring,
+  // otherwise short tokens like "pay" in EXPENSE_KEYWORDS false-match
+  // inside words like "rupaye" and misroute a sale ("becha ... rupaye")
+  // to expense.
+  if (containsKeyword(normalized, PAYMENT_KEYWORDS)) {
     type = 'payment';
     typeScore = 0.85;
-  } else if (EXPENSE_KEYWORDS.some((k) => normalized.includes(k))) {
+  } else if (containsKeyword(normalized, EXPENSE_KEYWORDS)) {
     type = 'expense';
     typeScore = 0.85;
-  } else if (SALE_KEYWORDS.some((k) => normalized.includes(k))) {
+  } else if (containsKeyword(normalized, SALE_KEYWORDS)) {
     type = 'sale';
     typeScore = 0.9;
   } else {

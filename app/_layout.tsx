@@ -41,6 +41,7 @@ import { useAutoLock } from '../src/hooks/useAutoLock';
 import { useNotificationSetup } from '../src/lib/notifications';
 import { SheetProvider } from '../src/components/sheets';
 import { initObservability } from '../src/lib/observability';
+import { ErrorBoundary } from '../src/components/ErrorBoundary';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* ignore — hook may fail in dev reload */
@@ -97,9 +98,10 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: Colors.bg }}>
       <SafeAreaProvider>
         <QueryClientProvider client={queryClient}>
-          <SheetProvider>
-            <StatusBar style="dark" backgroundColor={Colors.bg} />
-            <Stack
+          <ErrorBoundary>
+            <SheetProvider>
+              <StatusBar style="dark" backgroundColor={Colors.bg} />
+              <Stack
               screenOptions={{
                 headerShown: false,
                 contentStyle: { backgroundColor: Colors.bg },
@@ -129,7 +131,8 @@ export default function RootLayout() {
               />
               <Stack.Screen name="_debug" options={{ presentation: 'modal' }} />
             </Stack>
-          </SheetProvider>
+            </SheetProvider>
+          </ErrorBoundary>
         </QueryClientProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
