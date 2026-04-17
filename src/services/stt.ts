@@ -13,7 +13,10 @@
  */
 
 import axios from 'axios';
-import * as FileSystem from 'expo-file-system';
+// Legacy API retains the readAsStringAsync + EncodingType we need.
+// SDK 55's top-level expo-file-system surface moved to a promise-less
+// synchronous API; the legacy entry point preserves the old shape.
+import * as FileSystem from 'expo-file-system/legacy';
 
 const API_URL =
   process.env.EXPO_PUBLIC_API_URL ?? 'http://10.0.2.2:4000/api/v1';

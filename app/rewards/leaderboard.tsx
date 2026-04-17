@@ -37,7 +37,7 @@ import { haptic } from '@/lib/haptics';
 import { FadeInUp } from '@/components/animations';
 import { Skeleton, Chip, EmptyState } from '@/components/ui';
 import { useLeaderboard } from '@/features/gamification/hooks';
-import { LEVEL_META, type LeaderboardEntry } from '@/features/gamification/schemas';
+import { LEVEL_META, getLevelMeta, type LeaderboardEntry } from '@/features/gamification/schemas';
 import { auth$ } from '@/stores/auth';
 
 export default function LeaderboardScreen() {
@@ -251,7 +251,7 @@ function podiumAvatarColor(rank: number): { backgroundColor: string } {
 
 // ─── Rank row ────────────────────────────────────────────
 function RankRow({ entry, isMe }: { entry: LeaderboardEntry; isMe: boolean }) {
-  const levelMeta = LEVEL_META[entry.level] ?? LEVEL_META.beginner;
+  const levelMeta = getLevelMeta(entry.level);
   return (
     <View style={[styles.row, isMe && styles.rowMe]}>
       <View style={styles.rankNum}>

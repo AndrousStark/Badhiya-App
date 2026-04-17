@@ -108,9 +108,24 @@ export function resetIdentity(): void {
   state.posthog?.reset();
 }
 
+type TrackableValue = string | number | boolean | null;
+
 /** Record a product event. Silently drops if PostHog isn't initialized. */
-export function track(event: string, properties?: Record<string, unknown>): void {
-  state.posthog?.capture(event, properties);
+export function track(
+  event: string,
+  properties?: Record<string, TrackableValue>,
+): void {
+  if (!state.posthog) return;
+  if (properties) {
+    // PostHog rejects `undefined` values; strip them before send.
+    const filtered: Record<string, TrackableValue> = {};
+    for (const [k, v] of Object.entries(properties)) {
+      if (v !== undefined) filtered[k] = v;
+    }
+    state.posthog.capture(event, filtered);
+  } else {
+    state.posthog.capture(event);
+  }
 }
 
 /** Capture an exception to Sentry with optional context. */

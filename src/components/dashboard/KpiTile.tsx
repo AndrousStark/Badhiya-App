@@ -12,7 +12,7 @@ import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { Colors, FontFamily, FontSize, FontWeight, Spacing, Radius } from '@theme';
 import { NumberTicker } from '../animations/NumberTicker';
 
-type Tone = 'saffron' | 'profit' | 'loss' | 'warning' | 'neutral';
+type Tone = 'saffron' | 'profit' | 'loss' | 'warning' | 'trust' | 'neutral';
 type Direction = 'up' | 'down' | 'flat';
 
 interface Props {
@@ -122,6 +122,9 @@ const toneStyles: Record<Tone, { bg: ViewStyle }> = {
   },
   warning: {
     bg: { backgroundColor: Colors.warning[50] },
+  },
+  trust: {
+    bg: { backgroundColor: Colors.trust[50] },
   },
   neutral: {
     bg: {

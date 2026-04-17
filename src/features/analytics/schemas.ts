@@ -128,3 +128,41 @@ export const HEALTH_COMPONENTS = [
 ] as const;
 
 export type HealthComponentKey = (typeof HEALTH_COMPONENTS)[number]['key'];
+
+// ─── Monthly report (composite) ─────────────────────────
+// Returned by GET /analytics/report/monthly. Wraps totals, top-selling
+// items, expense categories, and credit summary into one payload.
+export const topSellingItemSchema = z.object({
+  item: z.string(),
+  // Backend may use either `quantity` or `count`; normalize to `count`.
+  count: z.coerce.number(),
+  revenue: z.coerce.number(),
+});
+export type TopSellingItem = z.infer<typeof topSellingItemSchema>;
+
+export const reportCreditSummarySchema = z.object({
+  totalOutstanding: z.coerce.number(),
+  totalCollected: z.coerce.number().default(0),
+  overdueAmount: z.coerce.number().default(0),
+  overdueCount: z.coerce.number().optional(),
+  activeCustomers: z.coerce.number().optional(),
+});
+export type ReportCreditSummary = z.infer<typeof reportCreditSummarySchema>;
+
+export const monthlyReportSchema = z.object({
+  businessName: z.string(),
+  year: z.coerce.number(),
+  month: z.coerce.number(),
+  totalRevenue: z.coerce.number(),
+  totalExpenses: z.coerce.number(),
+  netProfit: z.coerce.number(),
+  profitMargin: z.coerce.number(),
+  totalTransactions: z.coerce.number().default(0),
+  averageDailyRevenue: z.coerce.number().default(0),
+  topSellingItems: z.array(topSellingItemSchema).default([]),
+  expenseBreakdown: z.array(expenseCategorySchema).default([]),
+  creditSummary: reportCreditSummarySchema,
+  healthScore: z.coerce.number(),
+  healthLevel: z.string(),
+});
+export type MonthlyReport = z.infer<typeof monthlyReportSchema>;

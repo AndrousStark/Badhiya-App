@@ -115,8 +115,14 @@ function CreateBannerModal({ visible, onClose, onCreated }: { visible: boolean; 
       await createMut.mutateAsync({
         title: title.trim(),
         targetAudience: 'all' as const,
-        position: position as any,
+        position: position as
+          | 'whatsapp'
+          | 'dashboard_top'
+          | 'dashboard_bottom'
+          | 'sidebar'
+          | 'modal',
         priority: 0,
+        isActive: true,
       });
       setTitle('');
       onCreated();

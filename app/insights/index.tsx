@@ -56,8 +56,8 @@ import {
   useForecastAlerts,
   useCategoryTrends,
 } from '@/features/forecasting/hooks';
-import { PLATFORM_META, SEVERITY_META } from '@/features/intelligence/schemas';
-import { FESTIVAL_TYPE_META, ALERT_SEVERITY_META } from '@/features/forecasting/schemas';
+import { PLATFORM_META, SEVERITY_META, getSeverityMeta } from '@/features/intelligence/schemas';
+import { FESTIVAL_TYPE_META, ALERT_SEVERITY_META, getAlertSeverityMeta } from '@/features/forecasting/schemas';
 
 export default function InsightsHubScreen() {
   const { format } = useCurrency();
@@ -209,7 +209,7 @@ export default function InsightsHubScreen() {
                   onActionPress={() => router.push('/insights/prices')}
                 />
                 {unreadAlerts.slice(0, 3).map((alert) => {
-                  const sevMeta = SEVERITY_META[alert.severity] ?? SEVERITY_META.medium;
+                  const sevMeta = getSeverityMeta(alert.severity);
                   const platMeta = PLATFORM_META[alert.platform];
                   return (
                     <View key={alert.id} style={styles.alertRow}>
@@ -251,7 +251,7 @@ export default function InsightsHubScreen() {
                   onActionPress={() => router.push('/insights/forecast')}
                 />
                 {forecastAlerts.slice(0, 3).map((fa) => {
-                  const sev = ALERT_SEVERITY_META[fa.severity] ?? ALERT_SEVERITY_META.medium;
+                  const sev = getAlertSeverityMeta(fa.severity);
                   return (
                     <View key={fa.id} style={styles.forecastAlertRow}>
                       <AlertTriangle

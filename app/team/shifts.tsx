@@ -61,7 +61,7 @@ function getMonday(date: Date): string {
   const d = new Date(date);
   const day = d.getDay();
   d.setDate(d.getDate() - ((day === 0 ? 7 : day) - 1));
-  return d.toISOString().split('T')[0];
+  return d.toISOString().slice(0, 10);
 }
 
 export default function ShiftsScreen() {
@@ -79,14 +79,14 @@ export default function ShiftsScreen() {
     haptic('tap');
     const d = new Date(weekStart);
     d.setDate(d.getDate() - 7);
-    setWeekStart(d.toISOString().split('T')[0]);
+    setWeekStart(d.toISOString().slice(0, 10));
   }
 
   function nextWeek() {
     haptic('tap');
     const d = new Date(weekStart);
     d.setDate(d.getDate() + 7);
-    setWeekStart(d.toISOString().split('T')[0]);
+    setWeekStart(d.toISOString().slice(0, 10));
   }
 
   async function handleSeedDefaults() {
@@ -116,7 +116,7 @@ export default function ShiftsScreen() {
     : (() => {
         const d = new Date(weekStart);
         d.setDate(d.getDate() + 6);
-        return d.toISOString().split('T')[0];
+        return d.toISOString().slice(0, 10);
       })();
 
   return (

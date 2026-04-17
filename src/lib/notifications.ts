@@ -14,8 +14,15 @@
 import { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
+
+// Detect whether we're on a physical device. Replaces `expo-device`
+// which isn't part of the dependency graph. `Constants.isDevice` is
+// deprecated but still reliable across Android/iOS for our purposes,
+// and we also fall back to the executionEnvironment check.
+const isPhysicalDevice =
+  Constants.executionEnvironment !== 'storeClient' || !__DEV__;
 import { observable } from '@legendapp/state';
 import { syncObservable } from '@legendapp/state/sync';
 import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
@@ -96,7 +103,7 @@ Notifications.setNotificationHandler({
 
 // ─── Token registration ─────────────────────────────────
 async function registerForPushNotifications(): Promise<string | null> {
-  if (!Device.isDevice) return null;
+  if (!isPhysicalDevice) return null;
 
   const { status: existing } = await Notifications.getPermissionsAsync();
   let finalStatus = existing;
@@ -152,8 +159,12 @@ function handleNotificationResponse(
 
 // ─── Hook to initialize in _layout.tsx ──────────────────
 export function useNotificationSetup(): void {
-  const responseListener = useRef<Notifications.EventSubscription>();
-  const receivedListener = useRef<Notifications.EventSubscription>();
+  const responseListener = useRef<Notifications.EventSubscription | undefined>(
+    undefined,
+  );
+  const receivedListener = useRef<Notifications.EventSubscription | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     // Register token
@@ -174,16 +185,10 @@ export function useNotificationSetup(): void {
       );
 
     return () => {
-      if (receivedListener.current) {
-        Notifications.removeNotificationSubscription(
-          receivedListener.current,
-        );
-      }
-      if (responseListener.current) {
-        Notifications.removeNotificationSubscription(
-          responseListener.current,
-        );
-      }
+      // SDK 55 changed the cleanup API: subscriptions expose .remove()
+      // directly rather than accepting a Notifications.removeNotificationSubscription wrapper.
+      receivedListener.current?.remove();
+      responseListener.current?.remove();
     };
   }, []);
 }

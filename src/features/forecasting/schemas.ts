@@ -91,12 +91,16 @@ export const FESTIVAL_TYPE_META: Record<
   wedding:   { emoji: '💒', color: '#EC4899' },
 };
 
-export const ALERT_SEVERITY_META: Record<
-  string,
-  { label: string; color: string; emoji: string }
-> = {
+export type AlertSeverityMeta = { label: string; color: string; emoji: string };
+const ALERT_SEVERITY_META_STATIC = {
   critical: { label: 'Critical', color: '#DC2626', emoji: '🔴' },
   high:     { label: 'High',     color: '#EA580C', emoji: '🟠' },
   medium:   { label: 'Medium',   color: '#F59E0B', emoji: '🟡' },
   low:      { label: 'Low',      color: '#059669', emoji: '🟢' },
-};
+} satisfies Record<string, AlertSeverityMeta>;
+export const ALERT_SEVERITY_META: Record<string, AlertSeverityMeta> = ALERT_SEVERITY_META_STATIC;
+
+/** Resolves an alert severity string to its metadata. */
+export function getAlertSeverityMeta(severity: string): AlertSeverityMeta {
+  return ALERT_SEVERITY_META[severity] ?? ALERT_SEVERITY_META_STATIC.low;
+}

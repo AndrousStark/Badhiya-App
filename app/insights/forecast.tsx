@@ -52,6 +52,7 @@ import {
 import {
   FESTIVAL_TYPE_META,
   ALERT_SEVERITY_META,
+  getAlertSeverityMeta,
   type ForecastAlert,
   type UpcomingFestival,
   type CategoryTrend,
@@ -234,7 +235,7 @@ function AlertCard({
   onAcknowledge: () => void;
   onDismiss: () => void;
 }) {
-  const sev = ALERT_SEVERITY_META[alert.severity] ?? ALERT_SEVERITY_META.medium;
+  const sev = getAlertSeverityMeta(alert.severity);
   return (
     <View style={[styles.alertCard, { borderLeftColor: sev.color }]}>
       <View style={styles.alertHeader}>

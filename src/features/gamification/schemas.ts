@@ -179,17 +179,21 @@ export const pointHistorySchema = z.object({
 export type PointHistory = z.infer<typeof pointHistorySchema>;
 
 // ─── Static metadata: levels & sources ──────────────────
-export const LEVEL_META: Record<
-  string,
-  { label: string; emoji: string; color: string; threshold: number }
-> = {
+export type LevelMeta = { label: string; emoji: string; color: string; threshold: number };
+const LEVEL_META_STATIC = {
   beginner: { label: 'Shuruati',   emoji: '🌱', color: '#9CA3AF', threshold: 0 },
   bronze:   { label: 'Bronze',     emoji: '🥉', color: '#B45309', threshold: 100 },
   silver:   { label: 'Silver',     emoji: '🥈', color: '#6B7280', threshold: 500 },
   gold:     { label: 'Gold',       emoji: '🥇', color: '#F59E0B', threshold: 2000 },
   platinum: { label: 'Platinum',   emoji: '💎', color: '#7C3AED', threshold: 5000 },
   diamond:  { label: 'Diamond',    emoji: '💠', color: '#0EA5E9', threshold: 10000 },
-};
+} satisfies Record<string, LevelMeta>;
+export const LEVEL_META: Record<string, LevelMeta> = LEVEL_META_STATIC;
+
+/** Resolves a gamification level string to its metadata. */
+export function getLevelMeta(level: string): LevelMeta {
+  return LEVEL_META[level] ?? LEVEL_META_STATIC.beginner;
+}
 
 export const POINT_SOURCE_LABELS: Record<string, string> = {
   sale_recorded:       'Sale recorded',

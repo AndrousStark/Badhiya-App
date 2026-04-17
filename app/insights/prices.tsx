@@ -58,6 +58,7 @@ import {
 import {
   PLATFORM_META,
   SEVERITY_META,
+  getSeverityMeta,
   type TrackedProduct,
   type PriceAlert,
 } from '@/features/intelligence/schemas';
@@ -159,7 +160,7 @@ export default function PriceTrackerScreen() {
           <FadeInUp delay={0}>
             <SectionLabel label={`Alerts · ${unreadAlerts.length}`} />
             {unreadAlerts.map((alert) => {
-              const sev = SEVERITY_META[alert.severity] ?? SEVERITY_META.medium;
+              const sev = getSeverityMeta(alert.severity);
               const plat = PLATFORM_META[alert.platform];
               return (
                 <Pressable

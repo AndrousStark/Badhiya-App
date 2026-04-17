@@ -170,7 +170,7 @@ export default function SubscriptionScreen() {
                     tone="profit"
                   />
                 </View>
-                {subscription && subscription.billingCycle !== 'free' && (
+                {subscription && currentPlan.code !== 'free' && (
                   <View style={styles.billingInfo}>
                     <Text style={styles.billingText}>
                       {format(subscription.amount)} / {subscription.billingCycle}
@@ -207,7 +207,7 @@ export default function SubscriptionScreen() {
               .sort((a, b) => a.sortOrder - b.sortOrder)
               .map((plan, i) => {
                 const isCurrent = plan.code === currentPlan.code;
-                const meta = PLAN_META[plan.code] ?? PLAN_META.free;
+                const meta = (PLAN_META[plan.code] ?? PLAN_META.free) as NonNullable<typeof PLAN_META.free>;
                 const price =
                   cycle === 'monthly'
                     ? plan.monthlyPrice

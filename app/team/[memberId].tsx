@@ -56,6 +56,7 @@ import {
 } from '@/features/team/hooks';
 import {
   ROLE_META,
+  getRoleMeta,
   ATTENDANCE_META,
   type ActivityLog,
 } from '@/features/team/schemas';
@@ -147,7 +148,7 @@ export default function MemberDetailScreen() {
     );
   }
 
-  const roleMeta = ROLE_META[member.role] ?? ROLE_META.staff;
+  const roleMeta = getRoleMeta(member.role);
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>

@@ -45,7 +45,9 @@ import {
 } from '@/features/team/hooks';
 import {
   ATTENDANCE_META,
+  getAttendanceMeta,
   ROLE_META,
+  getRoleMeta,
   type AttendanceStatus,
   type TeamMember,
   type MarkAttendanceEntry,
@@ -95,7 +97,7 @@ export default function AttendanceScreen() {
       ([memberId, status]) => ({ memberId, status }),
     );
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = new Date().toISOString().slice(0, 10);
 
     Alert.alert(
       `${entries.length} members ki attendance save karein?`,
@@ -238,7 +240,7 @@ function MemberAttendanceRow({
   status: AttendanceStatus | undefined;
   onSetStatus: (s: AttendanceStatus) => void;
 }) {
-  const roleMeta = ROLE_META[member.role] ?? ROLE_META.staff;
+  const roleMeta = getRoleMeta(member.role);
   return (
     <View style={[styles.memberCard, status && styles.memberCardMarked]}>
       <View style={styles.memberTop}>
@@ -251,14 +253,14 @@ function MemberAttendanceRow({
         </View>
         {status && (
           <Badge
-            label={ATTENDANCE_META[status]?.label ?? status}
+            label={getAttendanceMeta(status).label ?? status}
             tone={status === 'present' ? 'profit' : status === 'absent' ? 'loss' : 'warning'}
           />
         )}
       </View>
       <View style={styles.statusChips}>
         {STATUS_OPTIONS.map((s) => {
-          const meta = ATTENDANCE_META[s];
+          const meta = getAttendanceMeta(s);
           return (
             <Pressable
               key={s}

@@ -53,6 +53,7 @@ import {
 } from '@/features/gamification/hooks';
 import {
   LEVEL_META,
+  getLevelMeta,
   CHALLENGE_TYPE_LABELS,
   type UserChallenge,
   type GamificationProfile,
@@ -193,7 +194,7 @@ export default function RewardsHubScreen() {
 // ─── Coins hero ──────────────────────────────────────────
 function CoinsHero({ profile }: { profile: GamificationProfile }) {
   const levelKey = profile.points.level;
-  const levelMeta = LEVEL_META[levelKey] ?? LEVEL_META.beginner;
+  const levelMeta = getLevelMeta(levelKey);
 
   return (
     <View style={styles.hero}>

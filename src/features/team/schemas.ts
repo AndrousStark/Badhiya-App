@@ -423,27 +423,35 @@ export const overtimeReportSchema = z.object({
 export type OvertimeReport = z.infer<typeof overtimeReportSchema>;
 
 // ─── Static metadata ────────────────────────────────────
-export const ROLE_META: Record<
-  string,
-  { label: string; labelHi: string; color: string }
-> = {
+export type RoleMeta = { label: string; labelHi: string; color: string };
+const ROLE_META_STATIC = {
   owner:      { label: 'Owner',      labelHi: 'Maalik',     color: '#7C3AED' },
   manager:    { label: 'Manager',    labelHi: 'Manager',    color: '#1A56DB' },
   staff:      { label: 'Staff',      labelHi: 'Karmchari',  color: '#F59E0B' },
   accountant: { label: 'Accountant', labelHi: 'Munim',      color: '#059669' },
-};
+} satisfies Record<string, RoleMeta>;
+export const ROLE_META: Record<string, RoleMeta> = ROLE_META_STATIC;
 
-export const ATTENDANCE_META: Record<
-  string,
-  { label: string; labelHi: string; emoji: string; color: string }
-> = {
+/** Resolves a role string to its metadata, falling back to staff. */
+export function getRoleMeta(role: string): RoleMeta {
+  return ROLE_META[role] ?? ROLE_META_STATIC.staff;
+}
+
+export type AttendanceMeta = { label: string; labelHi: string; emoji: string; color: string };
+const ATTENDANCE_META_STATIC = {
   present:      { label: 'Present',     labelHi: 'Hazir',      emoji: '✅', color: '#059669' },
   absent:       { label: 'Absent',      labelHi: 'Gairhazir',  emoji: '❌', color: '#DC2626' },
   half_day:     { label: 'Half Day',    labelHi: 'Aadha Din',  emoji: '🌗', color: '#F59E0B' },
   overtime:     { label: 'Overtime',    labelHi: 'Extra Kaam',  emoji: '⏰', color: '#7C3AED' },
   late:         { label: 'Late',        labelHi: 'Deri',       emoji: '🕐', color: '#EA580C' },
   paid_holiday: { label: 'Paid Leave',  labelHi: 'Chutti',     emoji: '🏖️', color: '#0EA5E9' },
-};
+} satisfies Record<string, AttendanceMeta>;
+export const ATTENDANCE_META: Record<string, AttendanceMeta> = ATTENDANCE_META_STATIC;
+
+/** Resolves an attendance status string to its metadata. */
+export function getAttendanceMeta(status: string): AttendanceMeta {
+  return ATTENDANCE_META[status] ?? ATTENDANCE_META_STATIC.absent;
+}
 
 export const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
 export const DAY_NAMES_HI = ['Ravi', 'Som', 'Mangal', 'Budh', 'Guru', 'Shukr', 'Shani'] as const;

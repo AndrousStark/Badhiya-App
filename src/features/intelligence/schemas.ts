@@ -143,12 +143,16 @@ export const PLATFORM_META: Record<
   flipkart_minutes: { label: 'Flipkart Minutes', color: '#2874F0', emoji: '📦' },
 };
 
-export const SEVERITY_META: Record<
-  string,
-  { label: string; color: string; emoji: string }
-> = {
+export type SeverityMeta = { label: string; color: string; emoji: string };
+const SEVERITY_META_STATIC = {
   critical: { label: 'Critical', color: '#DC2626', emoji: '🔴' },
   high:     { label: 'High',     color: '#EA580C', emoji: '🟠' },
   medium:   { label: 'Medium',   color: '#F59E0B', emoji: '🟡' },
   low:      { label: 'Low',      color: '#059669', emoji: '🟢' },
-};
+} satisfies Record<string, SeverityMeta>;
+export const SEVERITY_META: Record<string, SeverityMeta> = SEVERITY_META_STATIC;
+
+/** Resolves a severity string to its metadata. */
+export function getSeverityMeta(severity: string): SeverityMeta {
+  return SEVERITY_META[severity] ?? SEVERITY_META_STATIC.low;
+}

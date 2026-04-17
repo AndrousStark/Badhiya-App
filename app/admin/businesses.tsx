@@ -31,7 +31,7 @@ export default function AdminBusinessesScreen() {
   function handleSuspend(b: AdminBusinessRow) {
     Alert.prompt?.('Suspend reason', `Why suspend "${b.name}"?`, [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Suspend', style: 'destructive', onPress: (reason) => {
+      { text: 'Suspend', style: 'destructive', onPress: (reason?: string) => {
         suspendMut.mutate({ id: b.id, reason: reason || 'Admin action' });
       }},
     ]) ?? Alert.alert('Suspend', `Suspend "${b.name}"?`, [

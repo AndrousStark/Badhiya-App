@@ -68,7 +68,6 @@ export function NumberTicker({
       editable={false}
       value={undefined}
       defaultValue={`${prefix}${formatIndian(0, decimals)}${suffix}`}
-      // @ts-expect-error — animatedProps.text is whitelisted
       animatedProps={animatedProps}
       style={[
         {

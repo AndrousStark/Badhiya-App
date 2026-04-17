@@ -56,7 +56,7 @@ import {
   useTeamStats,
   useTodayAttendance,
 } from '@/features/team/hooks';
-import { ROLE_META, type TeamMember } from '@/features/team/schemas';
+import { ROLE_META, getRoleMeta, type TeamMember } from '@/features/team/schemas';
 import { useSheets } from '@/components/sheets';
 
 export default function TeamDashboardScreen() {
@@ -294,7 +294,7 @@ function QuickLink({
 // ─── Member row ──────────────────────────────────────────
 function MemberRow({ member }: { member: TeamMember }) {
   const { format } = useCurrency();
-  const roleMeta = ROLE_META[member.role] ?? ROLE_META.staff;
+  const roleMeta = getRoleMeta(member.role);
 
   return (
     <Pressable
