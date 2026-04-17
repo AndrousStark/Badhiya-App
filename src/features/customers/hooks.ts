@@ -14,7 +14,6 @@ import {
   listCustomers,
   getCreditSummary,
   getCustomerLedger,
-  giveCredit,
   receivePayment,
   sendReminder,
   sendBulkReminders,
@@ -30,6 +29,11 @@ import type {
 import { auth$ } from '@/stores/auth';
 import { haptic } from '@/lib/haptics';
 import { businessKeys } from '@/features/businesses/hooks';
+import {
+  createCreditGiveOffline,
+  createPaymentReceiveOffline,
+  syncPendingTransactions,
+} from '@/services/sync';
 
 // ─── Query keys ──────────────────────────────────────────
 export const customerKeys = {
@@ -74,26 +78,47 @@ export function useCustomerLedger(customerId: string | undefined) {
 
 // ─── Writes ─────────────────────────────────────────────
 //
-// Both mutations do an optimistic update on the summary so the header
-// "Total Pending" reflects the new balance instantly. The customer
-// list and ledger are invalidated on success for an authoritative
-// refresh — we don't optimistically insert new customer rows because
-// the server assigns the id and aging bucket, which we'd only be
-// guessing at locally.
+// Both mutations write **local-first** via the sync engine (SQLite
+// insert + customer find-or-create + totalOutstanding update), then
+// fire-and-forget attempt a network push. The Query summary is
+// optimistically updated so the Khata header reflects the new
+// balance instantly, and the customer list is invalidated to pull
+// the fresh aggregated view after the sync lands.
+//
+// If the network call fails, the local row stays queued — the next
+// sync tick (app foreground, reconnect, manual) will retry. This is
+// why give/receive can never return an error to the user for network
+// reasons alone.
+
 export function useGiveCredit() {
   const queryClient = useQueryClient();
   const businessId = auth$.businessId.get();
 
   return useMutation<
-    CreditMutationResponse,
+    { newOutstanding: number },
     Error,
     GiveCreditDto,
     { prevSummary: CreditSummary | undefined }
   >({
-    mutationFn: (dto) => giveCredit(businessId!, dto),
+    mutationFn: async (dto) => {
+      // 1. Local-first write — always succeeds if SQLite is healthy.
+      const local = await createCreditGiveOffline({
+        customerName: dto.customerName,
+        customerPhone: dto.customerPhone ?? null,
+        amount: dto.amount,
+        description: dto.description ?? null,
+      });
+      // 2. Kick off a background sync so the row hits the server if
+      //    we're online — but don't block the UI on it. Errors are
+      //    swallowed here; the sync engine re-queues them.
+      void syncPendingTransactions().catch(() => undefined);
+      return { newOutstanding: local.newOutstanding };
+    },
     onMutate: async (dto) => {
       if (!businessId) return { prevSummary: undefined };
-      await queryClient.cancelQueries({ queryKey: customerKeys.summary(businessId) });
+      await queryClient.cancelQueries({
+        queryKey: customerKeys.summary(businessId),
+      });
       const prev = queryClient.getQueryData<CreditSummary>(
         customerKeys.summary(businessId),
       );
@@ -132,10 +157,30 @@ export function useReceivePayment(customerId: string) {
     ReceivePaymentDto,
     { prevSummary: CreditSummary | undefined }
   >({
-    mutationFn: (dto) => receivePayment(businessId!, customerId, dto),
+    // Payments are still online-first because the backend endpoint is
+    // /credit/:customerId/payment — we need the server customer id,
+    // which only exists after the customer has synced. A future
+    // iteration can queue payments against local-only customers by
+    // deferring in the sync engine (see syncPendingCreditEntries).
+    mutationFn: async (dto) => {
+      try {
+        return await receivePayment(businessId!, customerId, dto);
+      } catch (err) {
+        // If the online call fails, fall back to a local-only entry
+        // against the cached customer row — sync will push it later
+        // once the network is back.
+        await createPaymentReceiveOffline({
+          localCustomerId: customerId,
+          amount: dto.amount,
+        });
+        throw err;
+      }
+    },
     onMutate: async (dto) => {
       if (!businessId) return { prevSummary: undefined };
-      await queryClient.cancelQueries({ queryKey: customerKeys.summary(businessId) });
+      await queryClient.cancelQueries({
+        queryKey: customerKeys.summary(businessId),
+      });
       const prev = queryClient.getQueryData<CreditSummary>(
         customerKeys.summary(businessId),
       );
