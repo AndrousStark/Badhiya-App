@@ -6,10 +6,12 @@
  * just decides where to navigate based on `data.isNewUser`.
  */
 
-import { useMutation } from '@tanstack/react-query';
+import { Alert } from 'react-native';
+import { router } from 'expo-router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { sendOtp, verifyOtp } from './api';
 import { api } from '@/lib/api';
-import { auth$ } from '@/stores/auth';
+import { auth$, logout as clearAuthState } from '@/stores/auth';
 import { haptic } from '@/lib/haptics';
 import type { SendOtpResponse, VerifyOtpResponse } from './schemas';
 
@@ -59,4 +61,51 @@ export function useVerifyOtp() {
       haptic('error');
     },
   });
+}
+
+/**
+ * Full logout flow — clears tokens, auth state, TanStack cache, and
+ * routes back to the login screen. Shows a native confirm dialog by
+ * default; pass `{ confirm: false }` to skip (e.g. for forced logouts
+ * after refresh failure).
+ */
+export function useLogout() {
+  const queryClient = useQueryClient();
+
+  async function perform(): Promise<void> {
+    haptic('error');
+    try {
+      await api.clearAuthTokens();
+    } catch {
+      // SecureStore can fail silently on simulator — don't block logout
+    }
+    clearAuthState();
+    queryClient.clear();
+    router.replace('/(auth)/login');
+  }
+
+  function logout(options: { confirm?: boolean } = {}): void {
+    const shouldConfirm = options.confirm ?? true;
+    if (!shouldConfirm) {
+      void perform();
+      return;
+    }
+    Alert.alert(
+      'Logout karna hai?',
+      'Aap wapas login screen par jayenge.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Haan, logout',
+          style: 'destructive',
+          onPress: () => {
+            void perform();
+          },
+        },
+      ],
+      { cancelable: true },
+    );
+  }
+
+  return logout;
 }

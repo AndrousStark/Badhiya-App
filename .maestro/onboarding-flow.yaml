@@ -1,13 +1,36 @@
 # Badhiya Phase 3 — onboarding wizard flow via dev bypass.
 #
-# Uses the dev bypass to skip real auth, then verifies the onboarding
-# happens for users with no business. For a new user flow, we'd need
-# a dev endpoint to wipe the user's business.
+# Uses the dev bypass to skip real auth (since it pre-populates a
+# business, the onboarding wizard itself can't be reached this way).
+# For verifying the onboarding UI, clear state and start a fresh
+# session with a new phone, then run through the 4 steps.
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - SMS_PROVIDER=console so OTPs print to backend logs
+#   - A test phone number that does NOT already have a business
 
 appId: com.badhiya.app
 ---
 - launchApp:
     clearState: true
+- assertVisible: "BADHIYA"
+- takeScreenshot: 01-login
+
+# Dev bypass verifies that the logged-in path lands on the dashboard.
 - tapOn: "Dev Bypass → Dashboard"
 - assertVisible: "Sharma General Store"
-- takeScreenshot: 01-after-bypass
+- takeScreenshot: 02-dashboard-after-bypass
+
+# Navigate to More → tap Logout to exercise the logout flow.
+- tapOn: "More"
+- scrollUntilVisible:
+    element:
+      id: "more-logout"
+    direction: DOWN
+- tapOn:
+    id: "more-logout"
+- assertVisible: "Logout karna hai?"
+- tapOn: "Haan, logout"
+- assertVisible: "BADHIYA"
+- takeScreenshot: 03-back-to-login

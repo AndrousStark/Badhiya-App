@@ -14,6 +14,7 @@
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { logout as clearAuthState } from '@/stores/auth';
 
 const API_URL =
   process.env.EXPO_PUBLIC_API_URL ?? 'http://10.0.2.2:4000/api/v1';
@@ -73,8 +74,12 @@ class ApiClient {
               return this.client.request(originalReq);
             }
           } catch {
-            // Refresh failed — fall through to normal error handling
+            // Refresh failed — the session is dead. Clear tokens AND
+            // the Legend State auth flag so the root redirect sends
+            // the user back to /login on the next render. Observer
+            // screens will unmount their stale data.
             await this.clearAuthTokens();
+            clearAuthState();
           }
         }
         return Promise.reject(this.normalizeError(error));

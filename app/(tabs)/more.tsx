@@ -40,7 +40,8 @@ import {
   Radius,
   Shadow,
 } from '../../src/theme';
-import { auth$, logout } from '../../src/stores/auth';
+import { auth$ } from '../../src/stores/auth';
+import { useLogout } from '../../src/features/auth/hooks';
 import { haptic } from '../../src/lib/haptics';
 import { FadeInUp } from '../../src/components/animations';
 import { SectionLabel } from '../../src/components/ui';
@@ -53,6 +54,7 @@ interface Row {
 }
 
 export default observer(function MoreScreen() {
+  const logout = useLogout();
   const name = auth$.name.get() ?? 'Rajesh ji';
   const shop = auth$.businessName.get() ?? 'Sharma General Store';
   const score = auth$.healthScore.get() ?? 644;
@@ -246,10 +248,10 @@ export default observer(function MoreScreen() {
 
           <Pressable
             style={({ pressed }) => [styles.logoutRow, pressed && styles.logoutPressed]}
-            onPress={() => {
-              haptic('error');
-              logout();
-            }}
+            onPress={() => logout()}
+            accessibilityRole="button"
+            accessibilityLabel="Logout"
+            testID="more-logout"
           >
             <LogOut color={Colors.loss[500]} size={18} strokeWidth={2.4} />
             <Text style={styles.logoutText}>Logout</Text>

@@ -25,14 +25,15 @@ import {
 } from '@/theme';
 import { Button } from '@/components/ui';
 import { FadeInUp } from '@/components/animations';
-import { auth$, logout } from '@/stores/auth';
+import { auth$ } from '@/stores/auth';
+import { useLogout } from '@/features/auth/hooks';
 import { haptic } from '@/lib/haptics';
-import { api } from '@/lib/api';
 
 export default observer(function LockScreen() {
   const [error, setError] = useState<string | null>(null);
   const [attempting, setAttempting] = useState(false);
   const name = auth$.name.get() ?? 'Wapas aapka swagat hai';
+  const logout = useLogout();
 
   useEffect(() => {
     // Auto-trigger biometric prompt on mount
@@ -78,11 +79,9 @@ export default observer(function LockScreen() {
     }
   }
 
-  async function handleLogout() {
+  function handleLogout() {
     haptic('tap');
-    await api.clearAuthTokens();
-    logout();
-    router.replace('/(auth)/login');
+    logout({ confirm: false });
   }
 
   return (
