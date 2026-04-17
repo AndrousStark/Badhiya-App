@@ -16,6 +16,11 @@ import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
+import { observable } from '@legendapp/state';
+import { syncObservable } from '@legendapp/state/sync';
+import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
+import { api } from './api';
+import { auth$ } from '@/stores/auth';
 
 // Detect whether we're on a physical device. Replaces `expo-device`
 // which isn't part of the dependency graph. `Constants.isDevice` is
@@ -23,11 +28,6 @@ import { router } from 'expo-router';
 // and we also fall back to the executionEnvironment check.
 const isPhysicalDevice =
   Constants.executionEnvironment !== 'storeClient' || !__DEV__;
-import { observable } from '@legendapp/state';
-import { syncObservable } from '@legendapp/state/sync';
-import { ObservablePersistMMKV } from '@legendapp/state/persist-plugins/mmkv';
-import { api } from './api';
-import { auth$ } from '@/stores/auth';
 
 // ─── Notification inbox (local persistence) ─────────────
 export interface LocalNotification {

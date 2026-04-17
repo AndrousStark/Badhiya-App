@@ -38,13 +38,13 @@ export interface AddTeamMemberProps {
   onClose: () => void;
 }
 
-const ROLE_OPTIONS: Array<{ value: MemberRole; label: string }> = [
+const ROLE_OPTIONS: { value: MemberRole; label: string }[] = [
   { value: 'staff', label: 'Staff · Karmchari' },
   { value: 'manager', label: 'Manager' },
   { value: 'accountant', label: 'Munim · Accountant' },
 ];
 
-const SALARY_OPTIONS: Array<{ value: SalaryType; label: string }> = [
+const SALARY_OPTIONS: { value: SalaryType; label: string }[] = [
   { value: 'monthly', label: 'Monthly' },
   { value: 'daily', label: 'Daily' },
   { value: 'hourly', label: 'Hourly' },

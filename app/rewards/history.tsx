@@ -246,7 +246,7 @@ function TransactionRow({ tx }: { tx: PointTransaction }) {
 // ─── Helpers ─────────────────────────────────────────────
 function groupByDate(
   txs: PointTransaction[],
-): Array<{ label: string; items: PointTransaction[] }> {
+): { label: string; items: PointTransaction[] }[] {
   const groups = new Map<string, PointTransaction[]>();
   const today = new Date();
   const todayKey = today.toISOString().slice(0, 10);
@@ -260,7 +260,7 @@ function groupByDate(
     groups.get(key)!.push(tx);
   }
 
-  const result: Array<{ label: string; items: PointTransaction[] }> = [];
+  const result: { label: string; items: PointTransaction[] }[] = [];
   for (const [key, items] of groups.entries()) {
     let label: string;
     if (key === todayKey) label = 'Aaj';

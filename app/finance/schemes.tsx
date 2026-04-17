@@ -40,7 +40,7 @@ import { useCurrency } from '@/hooks/useCurrency';
 import { useSchemeMatches } from '@/features/businesses/hooks';
 import type { SchemeMatch } from '@/features/businesses/schemas';
 
-const GRADIENTS: Array<[string, string]> = [
+const GRADIENTS: [string, string][] = [
   [Colors.saffron[500], Colors.saffron[600]],
   [Colors.profit[500], Colors.profit[700]],
   [Colors.trust[500], Colors.trust[700]],

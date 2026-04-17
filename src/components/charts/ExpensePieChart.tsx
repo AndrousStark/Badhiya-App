@@ -61,7 +61,7 @@ export function ExpensePieChart({
   const otherAmount = sorted
     .slice(TOP_N)
     .reduce((s, d) => s + d.amount, 0);
-  const slices: Array<Slice & { color: string }> = topN.map((d, i) => ({
+  const slices: (Slice & { color: string })[] = topN.map((d, i) => ({
     ...d,
     percentage: d.percentage ?? Math.round((d.amount / total) * 100),
     color: PALETTE[i] ?? Colors.ink[400]!,

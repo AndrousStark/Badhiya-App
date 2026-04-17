@@ -176,7 +176,7 @@ export const ondcOrderRowSchema = z
     }
     let itemCount = 0;
     try {
-      const items = row.items as Array<unknown> | null;
+      const items = row.items as unknown[] | null;
       if (Array.isArray(items)) itemCount = items.length;
     } catch {
       /* ignore */

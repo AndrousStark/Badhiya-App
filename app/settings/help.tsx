@@ -36,7 +36,7 @@ import { haptic } from '@/lib/haptics';
 import { FadeInUp } from '@/components/animations';
 import { useState } from 'react';
 
-const FAQ: Array<{ q: string; a: string }> = [
+const FAQ: { q: string; a: string }[] = [
   {
     q: 'Sale kaise record karein?',
     a: 'Home screen pe "Record Sale" button dabao ya voice button se bolo "Raju ko 500 ka saamaan diya".',

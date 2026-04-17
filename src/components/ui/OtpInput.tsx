@@ -44,7 +44,7 @@ export function OtpInput({
   autoFocus = true,
   testID,
 }: Props) {
-  const refs = useRef<Array<TextInput | null>>([]);
+  const refs = useRef<(TextInput | null)[]>([]);
 
   const digits: string[] = [];
   for (let i = 0; i < length; i++) {

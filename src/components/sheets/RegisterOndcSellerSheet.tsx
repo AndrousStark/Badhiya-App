@@ -44,11 +44,11 @@ export interface RegisterOndcSellerProps {
   onClose: () => void;
 }
 
-const DELIVERY_MODES: Array<{
+const DELIVERY_MODES: {
   value: 'self' | 'logistics' | 'both';
   label: string;
   emoji: string;
-}> = [
+}[] = [
   { value: 'self', label: 'Khud delivery', emoji: '🛵' },
   { value: 'logistics', label: '3rd party', emoji: '📦' },
   { value: 'both', label: 'Both', emoji: '🤝' },

@@ -48,11 +48,14 @@ export default observer(function AdminDashboardScreen() {
   const isAuth = adminAuth$.isAuthenticated.get();
   const adminName = adminAuth$.name.get();
 
-  if (!isAuth) return <Redirect href="/admin/login" />;
-
+  // Hooks must run unconditionally on every render; guard the return
+  // value with isAuth below instead of short-circuiting before the
+  // hook calls.
   const { format } = useCurrency();
   const dashQ = useAdminDashboard();
   const healthQ = useSystemHealth();
+
+  if (!isAuth) return <Redirect href="/admin/login" />;
 
   const dash = dashQ.data;
   const health = healthQ.data;

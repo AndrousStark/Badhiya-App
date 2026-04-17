@@ -30,11 +30,11 @@ import { haptic } from '@/lib/haptics';
 import { FadeInUp } from '@/components/animations';
 import { auth$, type UserLanguage } from '@/stores/auth';
 
-const LANGUAGES: Array<{
+const LANGUAGES: {
   code: UserLanguage;
   label: string;
   nativeLabel: string;
-}> = [
+}[] = [
   { code: 'hi', label: 'Hindi', nativeLabel: 'हिंदी' },
   { code: 'en', label: 'English', nativeLabel: 'English' },
   { code: 'hinglish', label: 'Hinglish', nativeLabel: 'Hinglish' },
