@@ -164,6 +164,7 @@ export default observer(function MoreScreen() {
 
   const supportSection: Row[] = [
     { icon: <HelpCircle color={Colors.trust[500]} size={18} strokeWidth={2.4} />, label: 'Madad chahiye?', onPress: () => { haptic('tap'); router.push('/settings/help'); } },
+    { icon: <Shield color={Colors.trust[500]} size={18} strokeWidth={2.4} />, label: 'Privacy & Terms', onPress: () => { haptic('tap'); router.push('/settings/privacy'); } },
   ];
 
   // Admin panel — only show for admin-role users (checks adminAuth)

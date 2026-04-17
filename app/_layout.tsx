@@ -40,10 +40,16 @@ import { Colors } from '../src/theme';
 import { useAutoLock } from '../src/hooks/useAutoLock';
 import { useNotificationSetup } from '../src/lib/notifications';
 import { SheetProvider } from '../src/components/sheets';
+import { initObservability } from '../src/lib/observability';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* ignore — hook may fail in dev reload */
 });
+
+// Side-effect: initialize Sentry + PostHog at module load so they
+// capture even the earliest render errors. Safe to call multiple
+// times — the underlying SDKs guard against re-init.
+initObservability();
 
 const queryClient = new QueryClient({
   defaultOptions: {

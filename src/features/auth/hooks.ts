@@ -13,6 +13,11 @@ import { sendOtp, verifyOtp } from './api';
 import { api } from '@/lib/api';
 import { auth$, logout as clearAuthState } from '@/stores/auth';
 import { haptic } from '@/lib/haptics';
+import {
+  identify as identifyObservability,
+  resetIdentity,
+  track,
+} from '@/lib/observability';
 import type { SendOtpResponse, VerifyOtpResponse } from './schemas';
 
 export function useSendOtp() {
@@ -55,6 +60,10 @@ export function useVerifyOtp() {
         businessCity: null,
       });
 
+      identifyObservability(data.user.id, data.user.phone);
+      track(data.isNewUser ? 'signup_completed' : 'login_completed', {
+        isNewUser: data.isNewUser,
+      });
       haptic('confirm');
     },
     onError: () => {
@@ -79,6 +88,8 @@ export function useLogout() {
     } catch {
       // SecureStore can fail silently on simulator — don't block logout
     }
+    track('logout');
+    resetIdentity();
     clearAuthState();
     queryClient.clear();
     router.replace('/(auth)/login');
