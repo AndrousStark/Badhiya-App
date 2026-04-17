@@ -1,0 +1,47 @@
+# Badhiya Phase 9 — Rewards / Gamification smoke test.
+#
+# Walks the rewards hub and each detail route:
+#   - /rewards index (coins hero, streak, spin teaser, challenges)
+#   - /rewards/spin (wheel)
+#   - /rewards/achievements (grid)
+#   - /rewards/leaderboard (top stores)
+#   - /rewards/history (points log)
+#
+# Prerequisites:
+#   - Backend running on 10.0.2.2:4000 (or EXPO_PUBLIC_API_URL override)
+#   - Dev bypass session has streakDays/badhiyaCoins seeded to 47/2840.
+
+appId: com.badhiya.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "BADHIYA"
+- tapOn: "Dev Bypass → Dashboard"
+
+# Navigate via More tab → Badhiya Rewards row
+- tapOn: "More"
+- scrollUntilVisible:
+    element:
+      text: "Badhiya Rewards"
+    direction: DOWN
+- tapOn: "Badhiya Rewards"
+- takeScreenshot: 01-rewards-hub
+
+# Open Spin wheel
+- scrollUntilVisible:
+    element:
+      text: "Spin"
+    direction: DOWN
+- tapOn: "Spin"
+- takeScreenshot: 02-spin
+- back
+
+# Open Achievements
+- tapOn: "Achievements"
+- takeScreenshot: 03-achievements
+- back
+
+# Open Leaderboard
+- tapOn: "Leaderboard"
+- takeScreenshot: 04-leaderboard
+- back
